@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+
+@layer base {
+  * {
+    @apply p-1;
+  }
+  html {
+    height: 40px;
+  }
+  body {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+}
