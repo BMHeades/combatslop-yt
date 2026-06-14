@@ -1,4 +1,4 @@
-import tailwind from '../assets/tailwind.css?inline'
+import tailwind from '../../assets/tailwind.css?inline'
 
 export default defineContentScript({
   matches: ['<all_urls>'],
@@ -48,7 +48,7 @@ export default defineContentScript({
             // if slop detected
             if(data.isSlop){
 
-              injectUI(ctx, card)
+              injectUI(ctx, card, id)
             }
           })
 
@@ -116,7 +116,7 @@ export default defineContentScript({
   },
 });
 
-async function injectUI(ctx: any, anchor: any) {
+async function injectUI(ctx: any, anchor: any, id: any) {
 
   const ui = await createShadowRootUi(ctx, {
     name: 'slop-indicator',
@@ -127,7 +127,7 @@ async function injectUI(ctx: any, anchor: any) {
       container.innerHTML = `
       <style>${tailwind}</style>
       <div class="bg-amber-200">
-        <p> Hello </p>
+        <p>${id}</p>
       </div>
       `
     },
