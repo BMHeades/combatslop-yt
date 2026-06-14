@@ -1,4 +1,4 @@
-
+import tailwind from '../assets/tailwind.css?inline'
 
 export default defineContentScript({
   matches: ['<all_urls>'],
@@ -23,6 +23,7 @@ export default defineContentScript({
     const cardSelector: string = ".ytd-rich-item-renderer > yt-lockup-view-model"
     const linkSelector: string = "a.ytLockupViewModelContentImage"
     const seen = new WeakSet();
+    const ids = new Set();
 
     function processVideo(video: Element) {
       if (seen.has(video)) return
@@ -34,17 +35,31 @@ export default defineContentScript({
       if (link) {
         const id = link?.getAttribute('href')?.match(/[?&]v=([^&]+)/)?.[1]
         if (id) {
+
+          if (ids.has(id)) return
+
+          ids.add(id)
+
           console.log(id)
           browser.runtime.sendMessage({
             message: id
-          }).then((data)=> console.log(data.message))
-        } 
+          }).then((data) => {
+
+            // if slop detected
+            if(data.isSlop){
+
+              injectUI(ctx, card)
+            }
+          })
+
+          const title = card?.querySelectorAll('span.ytAttributedStringHost.ytAttributedStringWhiteSpacePreWrap')[0]
+          if (title?.textContent) {
+            console.log(title.textContent.trim());
+          }
+        }
       }
 
-      const title = card?.querySelectorAll('span.ytAttributedStringHost.ytAttributedStringWhiteSpacePreWrap')[0]
-      if (title?.textContent) {
-        console.log(title.textContent.trim());
-      }
+
 
       // const id = video.querySelector(selector)?.querySelector('a.ytLockupViewModelContentImage')?.getAttribute('href')?.match(/[?&]v=([^&]+)/)?.[1]
       // if(id){
@@ -75,15 +90,15 @@ export default defineContentScript({
     //   });
     // }
 
-    
-    
+
+
     const observer = new MutationObserver((mutations, observer) => {
       for (const mutation of mutations) {
         mutation.addedNodes.forEach((node) => {
           if (!(node instanceof Element)) return;
-          
+
           // updateTitles();
-          
+
           processVideo(node)
         })
       }
@@ -94,13 +109,30 @@ export default defineContentScript({
         subtree: true,
       }
     )
-  
+
     document
       .querySelectorAll(cardSelector)
       .forEach(processVideo);
   },
 });
 
-function injectUI() {
+async function injectUI(ctx: any, anchor: any) {
 
+  const ui = await createShadowRootUi(ctx, {
+    name: 'slop-indicator',
+    position: 'inline',
+    anchor: anchor,
+    onMount(container) {
+     
+      container.innerHTML = `
+      <style>${tailwind}</style>
+      <div class="bg-amber-200">
+        <p> Hello </p>
+      </div>
+      `
+    },
+  });
+
+  // 4. Mount the UI
+  ui.mount();
 }

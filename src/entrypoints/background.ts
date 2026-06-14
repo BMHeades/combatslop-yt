@@ -26,7 +26,7 @@ function fulfill(){
 function handleMessages(data: any, sender: any, sendResponse: any) {
     console.log(data.message)
     fulfill().then(()=> sendResponse({
-      message: "1 second passed"
+      isSlop: Math.random() < 0.5
     }))
     return true
 }
