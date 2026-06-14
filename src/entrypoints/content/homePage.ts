@@ -1,31 +1,18 @@
 import tailwind from '../../assets/tailwind.css?inline'
 
-export default defineContentScript({
-  matches: ['<all_urls>'],
-  main(ctx) {
+const injectedUIs: any[] = []
 
-    // Make all images grey scale
-    const greyScaleImg = createIntegratedUi(ctx, {
-      position: 'inline',
-      anchor: 'head',
-      onMount: (container) => {
-        const style = document.createElement('style')
-        style.textContent =
-          'img{ filter: grayscale(100%) blur(8px); }'
-        // 'img{ filter: grayscale(100%) }'
-        container.append(style);
-      },
-    });
-    greyScaleImg.mount();
-
-    // log all yt names
-
+export const homePage = (ctx: any) => {
     const cardSelector: string = ".ytd-rich-item-renderer > yt-lockup-view-model"
     const linkSelector: string = "a.ytLockupViewModelContentImage"
     const seen = new WeakSet();
     const ids = new Set();
 
+
+    console.log("Home page injection started")
     function processVideo(video: Element) {
+
+
       if (seen.has(video)) return
 
       seen.add(video)
@@ -52,10 +39,10 @@ export default defineContentScript({
             }
           })
 
-          const title = card?.querySelectorAll('span.ytAttributedStringHost.ytAttributedStringWhiteSpacePreWrap')[0]
-          if (title?.textContent) {
-            console.log(title.textContent.trim());
-          }
+          // const title = card?.querySelectorAll('span.ytAttributedStringHost.ytAttributedStringWhiteSpacePreWrap')[0]
+          // if (title?.textContent) {
+          //   console.log(title.textContent.trim());
+          // }
         }
       }
     }
@@ -81,8 +68,17 @@ export default defineContentScript({
     document
       .querySelectorAll(cardSelector)
       .forEach(processVideo);
-  },
-});
+    
+
+    // clean up
+    return () => {
+      observer.disconnect()
+      ids.clear()
+      injectedUIs.forEach((ui: any)=> ui.remove())
+      console.log("Home page injection cleaned up!")
+    }
+}
+
 
 async function injectUI(ctx: any, anchor: any, id: any) {
 
@@ -100,7 +96,7 @@ async function injectUI(ctx: any, anchor: any, id: any) {
       `
     },
   });
-
+  injectedUIs.push(ui);
   // 4. Mount the UI
   ui.mount();
 }
