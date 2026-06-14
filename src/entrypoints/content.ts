@@ -96,7 +96,7 @@ export default defineContentScript({
     )
   
     document
-      .querySelectorAll(selector)
+      .querySelectorAll(cardSelector)
       .forEach(processVideo);
   },
 });
