@@ -58,39 +58,7 @@ export default defineContentScript({
           }
         }
       }
-
-
-
-      // const id = video.querySelector(selector)?.querySelector('a.ytLockupViewModelContentImage')?.getAttribute('href')?.match(/[?&]v=([^&]+)/)?.[1]
-      // if(id){
-      //    if (seen.has({id})) return
-
-      //   seen.add({id})
-      //   console.log(id)
-      // }
     }
-
-
-    // function updateTitles() {
-    //   const titles = document.querySelectorAll('.ytLockupMetadataViewModelTitle > span.ytAttributedStringHost.ytAttributedStringWhiteSpacePreWrap')
-
-    //   titles.forEach(title => {
-    //     if (title instanceof HTMLElement) {
-
-    //       if (!title?.dataset.ai) {
-    //         const isAI = Math.random() < 0.3;
-    //         if (isAI) {
-
-    //           title.textContent = `${isAI ? "[AI] " : ""}${title.textContent}`;
-    //           title.style.color = 'orange';
-    //         }
-    //         title.dataset.ai = 'marked';
-    //       }
-    //     }
-    //   });
-    // }
-
-
 
     const observer = new MutationObserver((mutations, observer) => {
       for (const mutation of mutations) {
