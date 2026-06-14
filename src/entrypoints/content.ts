@@ -1,3 +1,5 @@
+
+
 export default defineContentScript({
   matches: ['<all_urls>'],
   main(ctx) {
@@ -9,8 +11,8 @@ export default defineContentScript({
       onMount: (container) => {
         const style = document.createElement('style')
         style.textContent =
-          // 'img{ filter: grayscale(100%) blur(8px); }'
-          'img{ filter: grayscale(100%) }'
+          'img{ filter: grayscale(100%) blur(8px); }'
+        // 'img{ filter: grayscale(100%) }'
         container.append(style);
       },
     });
@@ -18,20 +20,26 @@ export default defineContentScript({
 
     // log all yt names
 
-    const selector: string = ".ytd-rich-item-renderer > yt-lockup-view-model"
+    const cardSelector: string = ".ytd-rich-item-renderer > yt-lockup-view-model"
+    const linkSelector: string = "a.ytLockupViewModelContentImage"
     const seen = new WeakSet();
 
     function processVideo(video: Element) {
-      if(seen.has(video)) return
+      if (seen.has(video)) return
 
       seen.add(video)
-      const card = video.querySelector(selector);
-      const link = card?.querySelector('a.ytLockupViewModelContentImage');
+      const card = video.querySelector(cardSelector);
+      const link = card?.querySelector(linkSelector);
 
-      if(link){
+      if (link) {
         const id = link?.getAttribute('href')?.match(/[?&]v=([^&]+)/)?.[1]
-        if(id) console.log(id)
-      } 
+        if (id) {
+          console.log(id)
+          browser.runtime.sendMessage({
+            message: id
+          }).then((data)=> console.log(data.message))
+        } 
+      }
 
       const title = card?.querySelectorAll('span.ytAttributedStringHost.ytAttributedStringWhiteSpacePreWrap')[0]
       if (title?.textContent) {
@@ -47,11 +55,35 @@ export default defineContentScript({
       // }
     }
 
+
+    // function updateTitles() {
+    //   const titles = document.querySelectorAll('.ytLockupMetadataViewModelTitle > span.ytAttributedStringHost.ytAttributedStringWhiteSpacePreWrap')
+
+    //   titles.forEach(title => {
+    //     if (title instanceof HTMLElement) {
+
+    //       if (!title?.dataset.ai) {
+    //         const isAI = Math.random() < 0.3;
+    //         if (isAI) {
+
+    //           title.textContent = `${isAI ? "[AI] " : ""}${title.textContent}`;
+    //           title.style.color = 'orange';
+    //         }
+    //         title.dataset.ai = 'marked';
+    //       }
+    //     }
+    //   });
+    // }
+
+    
+    
     const observer = new MutationObserver((mutations, observer) => {
       for (const mutation of mutations) {
         mutation.addedNodes.forEach((node) => {
           if (!(node instanceof Element)) return;
-
+          
+          // updateTitles();
+          
           processVideo(node)
         })
       }
@@ -62,9 +94,13 @@ export default defineContentScript({
         subtree: true,
       }
     )
-
+  
     document
       .querySelectorAll(selector)
       .forEach(processVideo);
   },
 });
+
+function injectUI() {
+
+}
