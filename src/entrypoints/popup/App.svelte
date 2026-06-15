@@ -2,7 +2,7 @@
 </script>
 
 <main>
-  <h1 class="text-3xl">Hello There</h1>
+  <h1 class="text-9xl">Hello There</h1>
 </main>
 
 <style>

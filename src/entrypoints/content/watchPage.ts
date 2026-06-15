@@ -1,9 +1,6 @@
-// import tailwind from '../../assets/tailwind.css?inline'
 
 import App from './Report.svelte'
 import { mount, unmount } from 'svelte';
-
-
 
 
 const injectedUIs: any = []

@@ -1,8 +1,11 @@
 import { homePage } from "./homePage";
 import { watchPage } from "./watchPage";
+import '@/assets/tailwind.css'
+
 
 export default defineContentScript({
   matches: ['*://*.youtube.com/*'],
+  cssInjectionMode: 'ui',
   main(ctx) {
 
     // injection on initial visit

@@ -1,4 +1,3 @@
-import tailwind from '../../assets/tailwind.css?inline'
 
 const injectedUIs: any[] = []
 
@@ -87,11 +86,11 @@ async function injectUI(ctx: any, anchor: any, id: any) {
     position: 'inline',
     anchor: anchor.querySelector(".ytLockupMetadataViewModelTextContainer"),
     onMount(container) {
-     
+      
+      // <style>${tailwind}</style>
       container.innerHTML = `
-      <style>${tailwind}</style>
       <div class="bg-amber-200">
-        <p>${id}</p>
+        <p class="" >${id}</p>
       </div>
       `
     },
