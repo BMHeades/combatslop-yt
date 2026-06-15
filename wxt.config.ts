@@ -5,7 +5,16 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   manifestVersion: 3,
   manifest: {
+    permissions: ['storage'],
     action: {},
+    browser_specific_settings: {
+      gecko: {
+        id: "@bm-combatslop",
+        data_collection_permissions: {
+          required: ["none"]
+        },
+      },
+    },
   },
   srcDir: 'src',
   modules: ['@wxt-dev/module-svelte'],

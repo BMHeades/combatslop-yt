@@ -1,4 +1,5 @@
 import { homePage } from "./homePage";
+import { watchPage } from "./watchPage";
 
 export default defineContentScript({
   matches: ['*://*.youtube.com/*'],
@@ -40,7 +41,7 @@ function router(ctx: any, path: string){
   }
 
   if(path.startsWith("/watch")){
-    return
+    return watchPage(ctx)
   }
 
   return homePage(ctx)

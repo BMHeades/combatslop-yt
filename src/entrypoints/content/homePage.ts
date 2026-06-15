@@ -85,7 +85,7 @@ async function injectUI(ctx: any, anchor: any, id: any) {
   const ui = await createShadowRootUi(ctx, {
     name: 'slop-indicator',
     position: 'inline',
-    anchor: anchor,
+    anchor: anchor.querySelector(".ytLockupMetadataViewModelTextContainer"),
     onMount(container) {
      
       container.innerHTML = `
@@ -95,6 +95,7 @@ async function injectUI(ctx: any, anchor: any, id: any) {
       </div>
       `
     },
+    
   });
   injectedUIs.push(ui);
   // 4. Mount the UI
