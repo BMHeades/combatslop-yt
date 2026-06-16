@@ -85,23 +85,6 @@ export const homePage = (ctx: any) => {
 
 async function injectIndicatorUI(ctx: any, anchor: any, id: any, isSlop: boolean) {
 
-  // const ui = await createShadowRootUi(ctx, {
-  //   name: 'slop-indicator',
-  //   position: 'inline',
-  //   anchor: anchor.querySelector(".ytLockupMetadataViewModelTextContainer"),
-  //   onMount(container) {
-
-  //     // <style>${tailwind}</style>
-  //     container.innerHTML = `
-  //     <div class="bg-amber-200">
-  //       <p class="" >Hello</p>
-  //     </div>
-  //     `
-  //   },
-
-  // });
-  // injectedUIs.push(ui);
-
   const ui = await createShadowRootUi(ctx, {
     name: 'slop-indicator',
     position: 'inline',

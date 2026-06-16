@@ -1,5 +1,6 @@
 
-import App from '@/lib/Report.svelte'
+import Report from '@/lib/Report.svelte'
+import Indicator from '@/lib/Indicator.svelte'
 import { mount, unmount } from 'svelte';
 
 
@@ -9,13 +10,15 @@ export const watchPage = (ctx: any, url: URL) => {
     const id = url.href.match(/[?&]v=([^&]+)/)?.[1]
     console.log("watch page injection started on", id)
 
-    const anchorSelector = 'ytd-menu-renderer>#top-level-buttons-computed.ytd-menu-renderer:has(segmented-like-dislike-button-view-model)'
-
-    const anchor = document.querySelector(anchorSelector)
+    const anchorReport = '#top-level-buttons-computed:has(segmented-like-dislike-button-view-model)'
+    const anchorIndicator = '#above-the-fold>#title'
 
     function onNavigate() {
         console.log('new page loaded');
-        if (id) injectReportUI(ctx, id, anchorSelector)
+        if (id) {
+            injectReportUI(ctx, id, anchorReport)
+            injectIndicatorUI(ctx, id, anchorIndicator, true)
+        }
     }
 
     window.addEventListener('yt-navigate-finish', onNavigate);
@@ -35,7 +38,7 @@ async function injectReportUI(ctx: any, id: string, anchor: string) {
         anchor,
         append: "first",
         onMount(container) {
-            return mount(App, {
+            return mount(Report, {
                 target: container,
                 props: {
                     id
@@ -44,11 +47,37 @@ async function injectReportUI(ctx: any, id: string, anchor: string) {
         },
         onRemove(app) {
             console.log("unmount slop-report")
-            unmount(app)
+            if(app) unmount(app)
         }
     });
     injectedUIs.push(ui);
     // 4. Mount the UI
     ui.autoMount({ once: true });
-    console.log("injected")
+    console.log("injected report")
+}
+
+async function injectIndicatorUI(ctx: any, id: any, anchor: any, isSlop: boolean) {
+    const ui = await createShadowRootUi(ctx, {
+        name: 'slop-indicator',
+        position: 'inline',
+        anchor,
+        // append: "after",
+        onMount(container) {
+            return mount(Indicator, {
+                target: container,
+                props: {
+                    id,
+                    isSlop
+                }
+            })
+        },
+        onRemove(app) {
+            if (app) unmount(app)
+        }
+    });
+    // 4. Mount the UI
+    injectedUIs.push(ui);
+    ui.autoMount();
+    console.log("injected indicator")
+
 }
