@@ -6,7 +6,11 @@
 
 
 @layer base {
-  button {
+  .btn {
     @apply p-1 px-2 border-b-8 active:translate-y-2.5 active:border-b
+  }
+
+  .btn-disabled {
+    @apply p-1 px-2 translate-y-2.5 border-b
   }
 }

@@ -5,14 +5,14 @@ import { mount, unmount } from 'svelte';
 
 const injectedUIs: any[] = []
 
-export const homePage = (ctx: any) => {
+export const searchPage = (ctx: any) => {
   const cardSelector: string = ".ytd-rich-item-renderer > yt-lockup-view-model"
   const linkSelector: string = "a.ytLockupViewModelContentImage"
   const seen = new Set();
   const ids = new Set();
 
   // initial run
-  console.log("Home page injection started")
+  console.log("Search page injection started")
 
   window.addEventListener('yt-navigate-finish', onNavigate);
   function onNavigate() {
@@ -74,7 +74,7 @@ export const homePage = (ctx: any) => {
     // seen.clear()
     // ids.clear()
     // injectedUIs.forEach((ui: any) => ui.remove())
-    console.log("Home page injection cleaned up!")
+    console.log("Search page injection cleaned up!")
   }
 }
 
