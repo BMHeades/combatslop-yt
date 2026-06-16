@@ -6,10 +6,10 @@ import { mount, unmount } from 'svelte';
 const injectedUIs: any = []
 
 export const watchPage = (ctx: any) => {
-    console.log("watch page injection started")
+    const id = location.href.match(/[?&]v=([^&]+)/)?.[1]
+    console.log("watch page injection started on", id)
 
-    const anchor = document.querySelector("segmented-like-dislike-button-view-model")
-    injectUI(ctx, anchor)
+    if(id) injectUI(ctx, id)
 
     return () => {
         injectedUIs.forEach((ui: any) => ui.remove())
@@ -17,20 +17,18 @@ export const watchPage = (ctx: any) => {
     }
 }
 
-async function injectUI(ctx: any, anchor: any) {
+async function injectUI(ctx: any, id: string) {
 
     const ui = await createShadowRootUi(ctx, {
         name: 'injected-indicator',
         position: 'inline',
-        anchor: "#actions",
-        append(anchor, ui) {
-            anchor.insertBefore(ui, anchor.firstChild)
-        },
+        anchor: '#top-level-buttons-computed',
+        append: "first",
         onMount(container) {
             return mount(App, {
                 target: container,
                 props: {
-                    id: 1
+                    id
                 }
             })
         },

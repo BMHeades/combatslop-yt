@@ -22,17 +22,15 @@
 </script>
 
 
-<div class="bg-amber-400">
+<div class="bg-amber-400 flex justify-end">
     <button
         onclick={() => {
             alert("Not slop");
         }}
-        class="bg-amber-300 w-1/3">Not Slop</button
-    >
+        class="bg-amber-300">Not Slop</button>
     <button
         onclick={() => {
             alert("Slop");
         }}
-        class="w-1/3">Report Slop</button
-    >
+        class="">Report Slop</button>
 </div>
