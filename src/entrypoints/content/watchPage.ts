@@ -1,5 +1,5 @@
 
-import App from './Report.svelte'
+import App from '@/lib/Report.svelte'
 import { mount, unmount } from 'svelte';
 
 
@@ -9,7 +9,7 @@ export const watchPage = (ctx: any) => {
     const id = location.href.match(/[?&]v=([^&]+)/)?.[1]
     console.log("watch page injection started on", id)
 
-    if(id) injectUI(ctx, id)
+    if(id) injectReportUI(ctx, id)
 
     return () => {
         injectedUIs.forEach((ui: any) => ui.remove())
@@ -17,10 +17,9 @@ export const watchPage = (ctx: any) => {
     }
 }
 
-async function injectUI(ctx: any, id: string) {
-
+async function injectReportUI(ctx: any, id: string) {
     const ui = await createShadowRootUi(ctx, {
-        name: 'injected-indicator',
+        name: 'icse-report',
         position: 'inline',
         anchor: '#top-level-buttons-computed',
         append: "first",

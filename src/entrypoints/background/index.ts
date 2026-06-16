@@ -21,6 +21,10 @@ function fulfill(){
   return new Promise((fulfil) => setTimeout(fulfil, 1000));
 }
 
+type Response = {
+  isSlop: 'unknown' | true | false
+}
+
 function handleMessages(data: any, sender: any, sendResponse: any) {
     console.log(data.message)
     fulfill().then(()=> sendResponse({
