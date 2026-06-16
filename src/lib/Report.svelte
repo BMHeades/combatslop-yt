@@ -25,12 +25,12 @@
 <div class="bg-amber-400 flex justify-end">
     <button
         onclick={() => {
-            alert("Not slop");
+            alert(id + " is Not slop");
         }}
         class="bg-amber-300">Not Slop</button>
     <button
         onclick={() => {
-            alert("Slop");
+            alert(id + " is Slop");
         }}
         class="">Report Slop</button>
 </div>

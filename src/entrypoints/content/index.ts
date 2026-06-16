@@ -9,15 +9,19 @@ export default defineContentScript({
   main(ctx) {
 
     // injection on initial visit
-    let cleanUp = router(ctx, location.pathname)
+    let cleanUp = router(ctx, new URL(location.href))
 
     ctx.addEventListener(window, 'wxt:locationchange', ({newUrl})=>{
-      const path = newUrl.pathname
+      // const path = newUrl.pathname
       if(cleanUp) cleanUp()
       
-      cleanUp = router(ctx, path)
+      cleanUp = router(ctx, newUrl)
 
     })
+
+    // manual run
+    // let cleanUpHomePage = homePage(ctx)
+    // let cleanUpWatchPage = watchPage(ctx, new URL(location.href))
 
     // Make all images grey scale
     const greyScaleImg = createIntegratedUi(ctx, {
@@ -37,14 +41,15 @@ export default defineContentScript({
 });
 
 // returns clean up function
-function router(ctx: any, path: string){
+function router(ctx: any, url: URL){
+  const path = url.pathname
   if(path.startsWith("/results")){
 
     return
   }
 
   if(path.startsWith("/watch")){
-    return watchPage(ctx)
+    return watchPage(ctx, url)
   }
 
   return homePage(ctx)
