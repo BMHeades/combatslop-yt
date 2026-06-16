@@ -1,4 +1,5 @@
 import { homePage } from "./homePage";
+import { searchPage } from "./searchPage";
 import { watchPage } from "./watchPage";
 import '@/assets/tailwind.css'
 
@@ -44,8 +45,7 @@ export default defineContentScript({
 function router(ctx: any, url: URL){
   const path = url.pathname
   if(path.startsWith("/results")){
-
-    return
+    return searchPage(ctx)
   }
 
   if(path.startsWith("/watch")){

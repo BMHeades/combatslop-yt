@@ -6,8 +6,8 @@ import { mount, unmount } from 'svelte';
 const injectedUIs: any[] = []
 
 export const searchPage = (ctx: any) => {
-  const cardSelector: string = ".ytd-rich-item-renderer > yt-lockup-view-model"
-  const linkSelector: string = "a.ytLockupViewModelContentImage"
+  const cardSelector: string = "ytd-video-renderer > .ytd-video-renderer#dismissible"
+  const linkSelector: string = "#video-title"
   const seen = new Set();
   const ids = new Set();
 
@@ -71,9 +71,9 @@ export const searchPage = (ctx: any) => {
     window.removeEventListener('yt-navigate-finish', onNavigate);
 
     observer.disconnect()
-    // seen.clear()
-    // ids.clear()
-    // injectedUIs.forEach((ui: any) => ui.remove())
+    seen.clear()
+    ids.clear()
+    injectedUIs.forEach((ui: any) => ui.remove())
     console.log("Search page injection cleaned up!")
   }
 }
@@ -84,7 +84,7 @@ async function injectIndicatorUI(ctx: any, anchor: any, id: any, isSlop: boolean
   const ui = await createShadowRootUi(ctx, {
     name: 'slop-indicator',
     position: 'inline',
-    anchor: anchor.querySelector(".ytLockupMetadataViewModelTextContainer"),
+    anchor: anchor.querySelector(".text-wrapper.style-scope.ytd-video-renderer"),
     onMount(container) {
       return mount(App, {
         target: container,
