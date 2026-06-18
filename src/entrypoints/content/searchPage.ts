@@ -84,7 +84,8 @@ async function injectIndicatorUI(ctx: any, anchor: any, id: any, isSlop: boolean
   const ui = await createShadowRootUi(ctx, {
     name: 'slop-indicator',
     position: 'inline',
-    anchor: anchor.querySelector(".text-wrapper.style-scope.ytd-video-renderer"),
+    append: "after",
+    anchor: anchor.querySelector(".text-wrapper.style-scope.ytd-video-renderer>#meta"),
     onMount(container) {
       return mount(App, {
         target: container,
