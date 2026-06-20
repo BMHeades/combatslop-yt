@@ -38,7 +38,8 @@ export const homePage = (ctx: any) => {
 
         console.log(id)
         browser.runtime.sendMessage({
-          message: id
+          type: "check",
+          id
         }).then((data: ScannedSlop) => {
 
           // if slop detected
