@@ -36,15 +36,15 @@ export const homePage = (ctx: any) => {
 
         ids.add(id)
 
-        console.log(id)
+        // console.log(id)
         browser.runtime.sendMessage({
-          type: "check",
+          type: "batchCheck",
           id
         }).then((data: ScannedSlop) => {
 
           // if slop detected
           if (data.isSlop === 2) return
-
+          // console.log(data.isSlop)
           injectIndicatorUI(ctx, card, id, data.isSlop)
 
         })

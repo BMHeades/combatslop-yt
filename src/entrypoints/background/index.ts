@@ -41,21 +41,6 @@ function handleMessages(data: any, sender: any, sendResponse: any) {
   }
 }
 
-const batchVideos = []
-const videos = new Map<any, any>()
-
-function batchCheckHandler(data: any, sendResponse: any) {
-  batchVideos.push(data.id)
-  if (batchVideos.length > 1) {
-    fetch(import.meta.env.WXT_VIDEOS_URL + "batch").then(response => response.json()).then((data) => {
-      console.log(data)
-      sendResponse({
-        isSlop: data.isSlop
-      })
-    }).catch(e => console.log(e))
-    fetch
-  }
-}
 
 function checkHandler(data: any, sendResponse: any) {
   fetch(import.meta.env.WXT_VIDEOS_URL + data.id).then(response => response.json()).then((data) => {
@@ -87,3 +72,112 @@ async function voteHandler(data: any, sendResponse: any) {
   await storage.setItem(`local:${data.id}`, data.isSlop)
   console.log("voted")
 }
+// const batchIds: any[] = []
+// const videos = new Map<any, any>()
+// let flushing = false
+
+// async function batchCheckHandler(data: any, sendResponse: any) {
+//   batchIds.push(data.id)
+//   videos.set(data.id, sendResponse)
+
+//   if (batchIds.length < 20 || flushing) {
+//     return
+//   }
+
+//   flushing = true
+//   const ids = [...batchIds]
+//   batchIds.length = 0
+//   try {
+//     const response = await fetch(import.meta.env.WXT_VIDEOS_URL + "batch", {
+//       method: "POST",
+//       body: JSON.stringify({
+//         ids
+//       }),
+//     })
+//     const resData = await response.json()
+//       console.log(resData)
+
+//     for (const item of resData.checked) {
+//       const callback = videos.get(item.id)
+//       if (callback) {
+//         console.log(item.isSlop)
+//         callback({ isSlop: item.isSlop })
+//         videos.delete(item.id)
+//       }
+//     }
+//   } finally {
+//     flushing = false
+//   }
+// }
+
+const batchIds: string[] = []
+const videos = new Map<string, Function>()
+
+let flushing = false
+let batchTimer: ReturnType<typeof setTimeout> | null = null
+
+async function flushBatch() {
+  if (flushing || batchIds.length === 0) {
+    return
+  }
+
+  flushing = true
+
+  if (batchTimer) {
+    clearTimeout(batchTimer)
+    batchTimer = null
+  }
+
+  const ids = [...batchIds]
+  batchIds.length = 0
+
+  try {
+    const response = await fetch(
+      import.meta.env.WXT_VIDEOS_URL + "batch",
+      {
+        method: "POST",
+        body: JSON.stringify({ ids }),
+      }
+    )
+
+    const resData = await response.json()
+    console.log(resData)
+
+    for (const item of resData.checked) {
+      const callback = videos.get(item.id)
+
+      if (callback) {
+        callback({
+          isSlop: item.isSlop,
+        })
+
+        videos.delete(item.id)
+      }
+    }
+  } finally {
+    flushing = false
+
+    // handle requests that arrived during the fetch
+    if (batchIds.length > 0) {
+      queueMicrotask(flushBatch)
+    }
+  }
+}
+
+function batchCheckHandler(data: any, sendResponse: any) {
+  batchIds.push(data.id)
+  videos.set(data.id, sendResponse)
+
+  // first item starts the timer
+  if (!batchTimer) {
+    batchTimer = setTimeout(() => {
+      flushBatch()
+    }, 100)
+  }
+
+  // flush immediately at 20
+  if (batchIds.length >= 30) {
+    flushBatch()
+  }
+}
+
