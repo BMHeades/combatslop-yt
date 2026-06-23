@@ -1,11 +1,13 @@
 <script lang="ts">
     import { fade, slide } from "svelte/transition";
+    // import { onMount } from 'svelte';
+
 
     let { id } = $props();
 
     let vote: null | boolean = $state(null);
 
-    console.log(vote);
+    storage.getItem(`local:${id}`).then((v) => {if(typeof v === "boolean") vote = v})
 
     function upVote() {
         vote = true;
@@ -31,29 +33,27 @@
 <div class="pr-3">
     {#if vote === null}
         <div
-            class="pt-1 font-semibold {vote !== null ? 'opacity-50' : ''}"
+            class="pt-1 font-semibold"
             transition:slide
         >
             <button
                 disabled={vote !== null}
                 class="bg-lime-400 border-lime-600 btn"
                 onclick={() => {
-                    // alert(id + " is Not slop");
                     upVote();
-                }}>Gem</button
+                }}>Not Slop</button
             >
             <button
                 disabled={vote !== null}
                 class="bg-orange-300 border-orange-500 btn"
                 onclick={() => {
-                    // alert(id + " is Slop");
                     downVote();
                 }}>Slop</button
             >
         </div>
     {:else}
         <div class="bg-gray-700 text-white p-1 px-2">
-            <p>Thanks!</p>
+            <p class="text-sm">Thanks for making internet better!</p>
         </div>
     {/if}
 </div>

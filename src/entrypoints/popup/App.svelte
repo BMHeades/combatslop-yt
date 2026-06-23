@@ -2,7 +2,9 @@
 </script>
 
 <main>
-  <h1 class="text-9xl">Hello There</h1>
+<div>
+  <h1 class="text-xl">Combat Slop BETA</h1>
+</div>
 </main>
 
 <style>

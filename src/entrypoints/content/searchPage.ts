@@ -42,7 +42,7 @@ export const searchPage = (ctx: any) => {
         }).then((data: ScannedSlop) => {
 
           // if slop detected
-          if (data.isSlop === 'unknown') return
+          if (data.isSlop === 2) return
 
           injectIndicatorUI(ctx, card, id, data.isSlop)
 
@@ -73,13 +73,13 @@ export const searchPage = (ctx: any) => {
     observer.disconnect()
     seen.clear()
     ids.clear()
-    injectedUIs.forEach((ui: any) => ui.remove())
+    // injectedUIs.forEach((ui: any) => ui.remove())
     console.log("Search page injection cleaned up!")
   }
 }
 
 
-async function injectIndicatorUI(ctx: any, anchor: any, id: any, isSlop: boolean) {
+async function injectIndicatorUI(ctx: any, anchor: any, id: any, isSlop: 0 | 1) {
 
   const ui = await createShadowRootUi(ctx, {
     name: 'slop-indicator',
