@@ -30,10 +30,10 @@
     }
 </script>
 
-<div class="pr-3">
+<div class="w-full flex justify-end">
     {#if vote === null}
         <div
-            class="pt-1 font-semibold"
+            class="pt-1 font-semibold mr-2"
             transition:slide
         >
             <button

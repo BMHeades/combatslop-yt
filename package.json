@@ -2,7 +2,7 @@
   "name": "Combat Slop Youtube BETA",
   "description": "Find and elminate slop on Youtube",
   "private": true,
-  "version": "26.6.23",
+  "version": "26.6.24",
   "type": "module",
   "scripts": {
     "dev": "wxt",

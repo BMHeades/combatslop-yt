@@ -16,17 +16,18 @@ export const watchPage = (ctx: any, url: URL) => {
     function onNavigate() {
         console.log('new page loaded');
         if (id) {
-            injectReportUI(ctx, id, anchorReport)
+            injectReportUI(ctx, id, anchorIndicator)
 
             // injectIndicatorUI(ctx, id, anchorIndicator, true)
 
             browser.runtime.sendMessage({
-                type: "check",
+                type: "batchCheck",
+                // type: "check", // temporary null origin on GET fix
                 id
             }).then((data: ScannedSlop) => {
 
                 // if slop detected
-                if (data.isSlop === 2) return
+                if (data.isSlop !== 0 && data.isSlop !== 1) return
 
                 injectIndicatorUI(ctx, id, anchorIndicator, data.isSlop)
 
@@ -49,7 +50,7 @@ async function injectReportUI(ctx: any, id: string, anchor: string) {
         name: 'slop-report',
         position: 'inline',
         anchor,
-        append: "first",
+        append: "last",
         onMount(container) {
             return mount(Report, {
                 target: container,
@@ -65,7 +66,7 @@ async function injectReportUI(ctx: any, id: string, anchor: string) {
     });
     injectedUIs.push(ui);
     // 4. Mount the UI
-    ui.autoMount();
+    ui.mount();
     console.log("injected report")
 }
 
@@ -74,7 +75,7 @@ async function injectIndicatorUI(ctx: any, id: any, anchor: any, isSlop: 0 | 1) 
         name: 'slop-indicator',
         position: 'inline',
         anchor,
-        // append: "after",
+        append: "first",
         onMount(container) {
             return mount(Indicator, {
                 target: container,

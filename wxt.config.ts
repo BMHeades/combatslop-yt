@@ -6,10 +6,11 @@ export default defineConfig({
   manifestVersion: 3,
   manifest: {
     permissions: ['storage'],
+    // host_permissions: [],
     action: {},
     browser_specific_settings: {
       gecko: {
-        id: "@bm-combatslop",
+        id: "{03f7f66f-379d-42de-9b98-ffdba87431f4}",
         data_collection_permissions: {
           required: ["none"]
         },
