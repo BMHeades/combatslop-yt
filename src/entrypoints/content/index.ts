@@ -31,8 +31,8 @@ export default defineContentScript({
       onMount: (container) => {
         const style = document.createElement('style')
         style.textContent =
-          'img{ filter: grayscale(100%) blur(8px); }'
-        // 'img{ filter: grayscale(100%) }'
+          // 'img{ filter: grayscale(100%) blur(8px); }'
+        'img{ filter: grayscale(100%) }'
         container.append(style);
       },
     });

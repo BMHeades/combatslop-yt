@@ -38,7 +38,8 @@ export const searchPage = (ctx: any) => {
 
         console.log(id)
         browser.runtime.sendMessage({
-          message: id
+          type: "batchCheck",
+          id
         }).then((data: ScannedSlop) => {
 
           // if slop detected

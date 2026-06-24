@@ -17,7 +17,20 @@ export const watchPage = (ctx: any, url: URL) => {
         console.log('new page loaded');
         if (id) {
             injectReportUI(ctx, id, anchorReport)
-            injectIndicatorUI(ctx, id, anchorIndicator, true)
+
+            // injectIndicatorUI(ctx, id, anchorIndicator, true)
+
+            browser.runtime.sendMessage({
+                type: "check",
+                id
+            }).then((data: ScannedSlop) => {
+
+                // if slop detected
+                if (data.isSlop === 2) return
+
+                injectIndicatorUI(ctx, id, anchorIndicator, data.isSlop)
+
+            })
         }
     }
 
@@ -47,7 +60,7 @@ async function injectReportUI(ctx: any, id: string, anchor: string) {
         },
         onRemove(app) {
             console.log("unmount slop-report")
-            if(app) unmount(app)
+            if (app) unmount(app)
         }
     });
     injectedUIs.push(ui);
@@ -56,7 +69,7 @@ async function injectReportUI(ctx: any, id: string, anchor: string) {
     console.log("injected report")
 }
 
-async function injectIndicatorUI(ctx: any, id: any, anchor: any, isSlop: boolean) {
+async function injectIndicatorUI(ctx: any, id: any, anchor: any, isSlop: 0 | 1) {
     const ui = await createShadowRootUi(ctx, {
         name: 'slop-indicator',
         position: 'inline',
@@ -77,7 +90,7 @@ async function injectIndicatorUI(ctx: any, id: any, anchor: any, isSlop: boolean
     });
     // 4. Mount the UI
     injectedUIs.push(ui);
-    ui.autoMount();
+    ui.mount();
     console.log("injected indicator")
 
 }
