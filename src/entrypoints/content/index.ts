@@ -25,18 +25,18 @@ export default defineContentScript({
     // let cleanUpWatchPage = watchPage(ctx, new URL(location.href))
 
     // Make all images grey scale
-    const greyScaleImg = createIntegratedUi(ctx, {
-      position: 'inline',
-      anchor: 'head',
-      onMount: (container) => {
-        const style = document.createElement('style')
-        style.textContent =
-          // 'img{ filter: grayscale(100%) blur(8px); }'
-        'img{ filter: grayscale(100%) }'
-        container.append(style);
-      },
-    });
-    greyScaleImg.mount();
+    // const greyScaleImg = createIntegratedUi(ctx, {
+    //   position: 'inline',
+    //   anchor: 'head',
+    //   onMount: (container) => {
+    //     const style = document.createElement('style')
+    //     style.textContent =
+    //       // 'img{ filter: grayscale(100%) blur(8px); }'
+    //     'img{ filter: grayscale(100%) }'
+    //     container.append(style);
+    //   },
+    // });
+    // greyScaleImg.mount();
     
   },
 });

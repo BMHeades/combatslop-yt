@@ -6,11 +6,11 @@
 <div>
     {#if isSlop === 1}
     <div class="inline-block p-2 text-base bg-orange-300">
-        <p class="">{id} is Slop</p>
+        <p class="">Slop</p>
     </div>
     {:else}
     <div class="inline-block p-2 text-base bg-lime-300">
-        <p class="">{id} is Gem</p>
+        <p class="">Gem</p>
     </div>
     {/if}
 </div>

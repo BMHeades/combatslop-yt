@@ -72,8 +72,8 @@ export const searchPage = (ctx: any) => {
     window.removeEventListener('yt-navigate-finish', onNavigate);
 
     observer.disconnect()
-    seen.clear()
-    ids.clear()
+    // seen.clear()
+    // ids.clear()
     // injectedUIs.forEach((ui: any) => ui.remove())
     console.log("Search page injection cleaned up!")
   }
