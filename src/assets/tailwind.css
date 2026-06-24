@@ -18,4 +18,11 @@
   .btn-disabled {
     @apply p-1 px-2 translate-y-2.5 border-b
   }
+
+  fieldset {
+    @apply border-gray-500 rounded text-gray-200
+  }
+  fieldset > legend {
+    @apply px-1
+  }
 }

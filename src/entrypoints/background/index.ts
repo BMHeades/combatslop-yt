@@ -15,6 +15,17 @@ export default defineBackground(() => {
   //   }).then(() => console.log("voted"));
   // })
 
+  // default options
+  const settingsStorage = storage.defineItem<Settings>('sync:settings');
+  settingsStorage.getValue().then(settings => {
+    if (settings === null) {
+      settingsStorage.setValue({
+        scanOnHomePage: true,
+        scanOnSearchPage: true,
+        greyScaleImgs: false
+      })
+    }
+  })
 
   browser.runtime.onMessage.addListener(handleMessages)
 });
