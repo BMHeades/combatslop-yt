@@ -31,7 +31,7 @@ export const homePage = (ctx: any) => {
       // initial run
       console.log("Home page injection started")
 
-      window.addEventListener('yt-navigate-finish', onNavigate);
+      window.addEventListener('yt-navigate-finish', onNavigate, {once: true});
       
 
       observer.observe(document.body,

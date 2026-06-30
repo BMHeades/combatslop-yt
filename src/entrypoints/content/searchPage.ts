@@ -34,7 +34,7 @@ export const searchPage = (ctx: any) => {
       // initial run
       console.log("Search page injection started")
 
-      window.addEventListener('yt-navigate-finish', onNavigate);
+      window.addEventListener('yt-navigate-finish', onNavigate, {once: true});
 
       observer.observe(document.body,
         {
