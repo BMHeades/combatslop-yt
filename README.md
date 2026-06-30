@@ -15,4 +15,4 @@ It relies on the wisdom of the crowd. Audience get to vote whether a video is sl
 - option to hide slop videos
 - option to show only gems
 
-Handcrafted with love 🧡
+Handcrafted with love 🧡 ~
