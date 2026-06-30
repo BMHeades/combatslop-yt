@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="src/assets/logo.png" alt="" width="400">
+  <img src="src/assets/logo.png" alt="CombatSlop logo, an orange cat poking slop" width="200">
 </p>
 
 # CombatSlop YT
