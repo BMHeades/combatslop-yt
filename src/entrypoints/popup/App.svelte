@@ -26,37 +26,23 @@
     console.log("saved new settings");
   });
 
-
   // easter egg
-  let catPressed = $state(false)
-  
+  let catPressed = $state(false);
 </script>
 
-<main class="w-80 h-130">
-  <div class="p-5">
-
-    <!-- Logo -->
-    <div class="pt-0 flex justify-center">
-      <button onclick={()=> catPressed = !catPressed}
-      class="h-36"
-      >
-        <img
-          class="w-36 {catPressed? "h-25 w-50 translate-y-6" : "h-36" }"
-          src={logo}
-          alt="Cat poking a slop object logo"
-        />
-      </button>
-    </div>
+<main class="w-80 h-130 accent-amber-600">
+  <div class="p-4">
 
     <!-- Title -->
     <div class="">
-      <h1 class="text-xl font-semibold text-red-400 pb-2 text-center">
+      <h1 class="text-xl font pt-8 pb-10 text-center">
         {browser.runtime.getManifest().name}
+        <b class="text-amber-500">BETA</b>
       </h1>
     </div>
 
     <!-- Settings Scan on -->
-    <fieldset class="border p-2 pb-4 px-5">
+    <fieldset class="pb-4 px-5">
       <legend>Scan on</legend>
       <div class="flex gap-1">
         <input
@@ -76,8 +62,9 @@
       </div>
     </fieldset>
 
+    <br />
     <!-- Settings misc -->
-    <fieldset class="border p-2 pb-4 px-5 mt-2">
+    <fieldset class="pb-4 px-5 mt-2">
       <legend>Misc</legend>
       <div class="flex gap-1">
         <input
@@ -91,12 +78,23 @@
 
     <!-- Client ID -->
     <div class="p-5">
-      <h1>{clientID}</h1>
+      <!-- <h1>{clientID}</h1> -->
+    </div>
+
+    <!-- Logo -->
+    <div class="pt-0 flex justify-center">
+      <button onclick={() => (catPressed = !catPressed)} class="h-36">
+        <img
+          class="w-36 {catPressed ? 'h-25 w-50 translate-y-6' : 'h-36'}"
+          src={logo}
+          alt="Cat poking a slop object logo"
+        />
+      </button>
     </div>
   </div>
 </main>
 
-<footer class="p-2">
+<footer class="p-4">
   <h2 class="">version {browser.runtime.getManifest().version}</h2>
 </footer>
 

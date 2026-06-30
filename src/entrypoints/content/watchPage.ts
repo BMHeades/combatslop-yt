@@ -41,6 +41,7 @@ export const watchPage = (ctx: any, url: URL) => {
         window.removeEventListener('yt-navigate-finish', onNavigate);
 
         injectedUIs.forEach((ui: any) => ui.remove())
+        injectedUIs.length = 0
         console.log("watch page injection cleaned up")
     }
 }

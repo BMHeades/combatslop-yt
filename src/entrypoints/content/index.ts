@@ -3,6 +3,7 @@ import { searchPage } from "./searchPage";
 import { watchPage } from "./watchPage";
 import '@/assets/tailwind.css'
 
+const settingsStorage = storage.defineItem<Settings>('sync:settings');
 
 export default defineContentScript({
   matches: ['*://*.youtube.com/*'],
@@ -37,7 +38,7 @@ export default defineContentScript({
       },
     });
 
-    const settingsStorage = storage.defineItem<Settings>('sync:settings');
+
     settingsStorage.getValue().then(settings => {
       if (settings?.greyScaleImgs) {
         greyScaleImg.mount();
@@ -50,14 +51,33 @@ export default defineContentScript({
 // returns clean up function
 function router(ctx: any, url: URL) {
   const path = url.pathname
+
+  // Search Page
   if (path.startsWith("/results")) {
-    return searchPage(ctx)
+
+    settingsStorage.getValue().then(settings => {
+      if (!settings?.scanOnSearchPage) {
+        return
+      }
+      return searchPage(ctx)
+    })
+
+
   }
 
+  // Video Page
   if (path.startsWith("/watch")) {
     return watchPage(ctx, url)
   }
 
-  return homePage(ctx)
+  // Home Feed
+  settingsStorage.getValue().then(settings => {
+    if (!settings?.scanOnHomePage) {
+      return
+    }
+    return homePage(ctx)
+
+  })
+
 }
 
