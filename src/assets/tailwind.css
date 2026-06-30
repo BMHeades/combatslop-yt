@@ -23,6 +23,6 @@
     @apply border-gray-500 rounded text-gray-200
   }
   fieldset > legend {
-    @apply px-1
+    @apply px-1 
   }
 }

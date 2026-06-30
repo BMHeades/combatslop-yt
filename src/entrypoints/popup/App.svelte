@@ -1,59 +1,98 @@
 <script lang="ts">
+  import logo from "@/assets/logo.png";
+
   let settings: Settings = $state({
     scanOnHomePage: true,
     scanOnSearchPage: true,
-    greyScaleImgs: false
-  })
+    greyScaleImgs: false,
+  });
 
-  const settingsStorage = storage.defineItem<Settings>('sync:settings');
-  
+  let clientID: null | string = $state("");
+  const settingsStorage = storage.defineItem<Settings>("sync:settings");
+
   onMount(async () => {
-    const settingsValue = await settingsStorage.getValue()
-    if(settingsValue) settings = settingsValue
-  })
+    const settingsValue = await settingsStorage.getValue();
+    if (settingsValue) settings = settingsValue;
+
+    clientID = await storage.getItem("sync:client_id");
+  });
 
   $effect(() => {
     settingsStorage.setValue({
       scanOnHomePage: settings.scanOnHomePage,
       scanOnSearchPage: settings.scanOnSearchPage,
-      greyScaleImgs: settings.greyScaleImgs
-    })
-    console.log("saved new settings")
+      greyScaleImgs: settings.greyScaleImgs,
+    });
+    console.log("saved new settings");
   });
- 
 
+
+  // easter egg
+  let catPressed = $state(false)
+  
 </script>
 
-<main class="w-80 h-100 ">
+<main class="w-80 h-130">
   <div class="p-5">
-    <h1 class="text-xl text-orange-200 py-3 pb-6">{browser.runtime.getManifest().name}</h1>
 
-    <!-- <div class="flex justify-center py-5">
-      <div class="flex gap-1">
-        <input class="" type="checkbox" id="enabled" />
-        <label for="enabled">Enabled</label>
-      </div>
-    </div> -->
+    <!-- Logo -->
+    <div class="pt-0 flex justify-center">
+      <button onclick={()=> catPressed = !catPressed}
+      class="h-36"
+      >
+        <img
+          class="w-36 {catPressed? "h-25 w-50 translate-y-6" : "h-36" }"
+          src={logo}
+          alt="Cat poking a slop object logo"
+        />
+      </button>
+    </div>
 
-    <fieldset class="border p-2">
+    <!-- Title -->
+    <div class="">
+      <h1 class="text-xl font-semibold text-red-400 pb-2 text-center">
+        {browser.runtime.getManifest().name}
+      </h1>
+    </div>
+
+    <!-- Settings Scan on -->
+    <fieldset class="border p-2 pb-4 px-5">
       <legend>Scan on</legend>
       <div class="flex gap-1">
-        <input type="checkbox" id="homepage" bind:checked={settings.scanOnHomePage} />
+        <input
+          type="checkbox"
+          id="homepage"
+          bind:checked={settings.scanOnHomePage}
+        />
         <label for="homepage">Home Feed</label>
       </div>
       <div class="flex gap-1">
-        <input type="checkbox" id="searchpage" bind:checked={settings.scanOnSearchPage}/>
+        <input
+          type="checkbox"
+          id="searchpage"
+          bind:checked={settings.scanOnSearchPage}
+        />
         <label for="searchpage">Search Results</label>
       </div>
     </fieldset>
-    <fieldset class="border p-2 mt-2">
+
+    <!-- Settings misc -->
+    <fieldset class="border p-2 pb-4 px-5 mt-2">
       <legend>Misc</legend>
       <div class="flex gap-1">
-        <input type="checkbox" id="greyscaleimg" bind:checked={settings.greyScaleImgs}/>
+        <input
+          type="checkbox"
+          id="greyscaleimg"
+          bind:checked={settings.greyScaleImgs}
+        />
         <label for="greyscaleimg">B&W Images</label>
       </div>
     </fieldset>
 
+    <!-- Client ID -->
+    <div class="p-5">
+      <h1>{clientID}</h1>
+    </div>
   </div>
 </main>
 

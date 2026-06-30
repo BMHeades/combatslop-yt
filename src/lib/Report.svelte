@@ -53,7 +53,7 @@
         </div>
     {:else}
         <div class="bg-gray-700 text-white p-1 px-2">
-            <p class="text-sm">Thanks for making internet better!</p>
+            <p class="text-sm">Thanks for making the internet better!</p>
         </div>
     {/if}
 </div>

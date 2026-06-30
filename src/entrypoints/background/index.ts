@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+const clientIDStorage = storage.defineItem<string>('sync:client_id')
 
 export default defineBackground(() => {
 
@@ -24,6 +25,15 @@ export default defineBackground(() => {
         scanOnSearchPage: true,
         greyScaleImgs: false
       })
+      console.log("default settings set on bg init")
+
+    }
+  })
+
+  clientIDStorage.getValue().then(id => {
+    if (id === null) {
+      clientIDStorage.setValue(uuid())
+      console.log("new client id set on bg init")
     }
   })
 
@@ -64,11 +74,13 @@ function checkHandler(data: any, sendResponse: any) {
 
 async function voteHandler(data: any, sendResponse: any) {
 
-  let clientId = await storage.getItem('sync:client_id');
+  // let clientId = await storage.getItem('sync:client_id');
+  let clientId = await clientIDStorage.getValue()
   if (!clientId) {
-    console.log("new client id set")
     clientId = uuid()
-    await storage.setItem('sync:client_id', clientId)
+    // await storage.setItem('sync:client_id', clientId)
+    await clientIDStorage.setValue(clientId)
+    console.log("new client id set")
   }
 
 
