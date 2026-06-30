@@ -35,7 +35,7 @@ export const watchPage = (ctx: any, url: URL) => {
         }
     }
 
-    window.addEventListener('yt-navigate-finish', onNavigate);
+    window.addEventListener('yt-navigate-finish', onNavigate, {once: true});
 
     return () => {
         window.removeEventListener('yt-navigate-finish', onNavigate);
