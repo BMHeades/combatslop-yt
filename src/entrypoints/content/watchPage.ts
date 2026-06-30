@@ -67,7 +67,7 @@ async function injectReportUI(ctx: any, id: string, anchor: string) {
     });
     injectedUIs.push(ui);
     // 4. Mount the UI
-    ui.mount();
+    ui.autoMount();
     console.log("injected report")
 }
 
@@ -92,7 +92,7 @@ async function injectIndicatorUI(ctx: any, id: any, anchor: any, isSlop: 0 | 1) 
     });
     // 4. Mount the UI
     injectedUIs.push(ui);
-    ui.mount();
+    ui.autoMount();
     console.log("injected indicator")
 
 }

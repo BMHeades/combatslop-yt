@@ -3,7 +3,7 @@ import { searchPage } from "./searchPage";
 import { watchPage } from "./watchPage";
 import '@/assets/tailwind.css'
 
-const settingsStorage = storage.defineItem<Settings>('sync:settings');
+export const settingsStorage = storage.defineItem<Settings>('sync:settings');
 
 export default defineContentScript({
   matches: ['*://*.youtube.com/*'],
@@ -55,12 +55,12 @@ function router(ctx: any, url: URL) {
   // Search Page
   if (path.startsWith("/results")) {
 
-    settingsStorage.getValue().then(settings => {
-      if (!settings?.scanOnSearchPage) {
-        return
-      }
-      return searchPage(ctx)
-    })
+    // settingsStorage.getValue().then(settings => {
+    //   if (!settings?.scanOnSearchPage) {
+    //     return
+    //   }
+    // })
+    return searchPage(ctx)
 
 
   }
@@ -71,13 +71,14 @@ function router(ctx: any, url: URL) {
   }
 
   // Home Feed
-  settingsStorage.getValue().then(settings => {
-    if (!settings?.scanOnHomePage) {
-      return
-    }
+  if (path === "/") {
+    // settingsStorage.getValue().then(settings => {
+    //   if (!settings?.scanOnHomePage) {
+    //     return
+    //   }
+      
+    // })
     return homePage(ctx)
-
-  })
-
+  }
 }
 

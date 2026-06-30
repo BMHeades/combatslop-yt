@@ -1,6 +1,7 @@
 
 import App from '@/lib/Indicator.svelte'
 import { mount, unmount } from 'svelte';
+import { settingsStorage } from '.';
 
 
 const injectedUIs: any[] = []
@@ -11,16 +12,36 @@ export const homePage = (ctx: any) => {
   const seen = new Set();
   const ids = new Set();
 
-  // initial run
-  console.log("Home page injection started")
+  const observer = new MutationObserver((mutations, observer) => {
+    for (const mutation of mutations) {
+      mutation.addedNodes.forEach((node) => {
+        if (!(node instanceof Element)) return;
+        processVideo(node)
+      })
+    }
+  })
 
-  window.addEventListener('yt-navigate-finish', onNavigate);
   function onNavigate() {
-    console.log('page loaded');
-    document.querySelectorAll(cardSelector).forEach(processVideo);
-
+        console.log('page loaded');
+        document.querySelectorAll(cardSelector).forEach(processVideo);
   }
 
+  settingsStorage.getValue().then(settings => {
+    if (settings?.scanOnHomePage) {
+      // initial run
+      console.log("Home page injection started")
+
+      window.addEventListener('yt-navigate-finish', onNavigate);
+      
+
+      observer.observe(document.body,
+        {
+          childList: true,
+          subtree: true,
+        }
+      )
+    }
+  })
 
   function processVideo(video: Element) {
     if (seen.has(video)) return
@@ -52,20 +73,7 @@ export const homePage = (ctx: any) => {
     }
   }
 
-  const observer = new MutationObserver((mutations, observer) => {
-    for (const mutation of mutations) {
-      mutation.addedNodes.forEach((node) => {
-        if (!(node instanceof Element)) return;
-        processVideo(node)
-      })
-    }
-  })
-  observer.observe(document.body,
-    {
-      childList: true,
-      subtree: true,
-    }
-  )
+
 
   // clean up
   return () => {
