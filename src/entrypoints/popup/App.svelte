@@ -95,7 +95,7 @@
 </main>
 
 <footer class="p-4">
-  <h2 class="">version {browser.runtime.getManifest().version}</h2>
+  <h2 class="">version {browser.runtime.getManifest().version_name}</h2>
 </footer>
 
 <style>

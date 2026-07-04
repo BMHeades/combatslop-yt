@@ -169,9 +169,11 @@ async function flushBatch() {
     for (const item of resData.checked) {
       const callback = videos.get(item.id)
 
+
       if (callback) {
         callback({
           isSlop: item.isSlop,
+          // isSlop: 1, // always return slop
         })
 
         videos.delete(item.id)

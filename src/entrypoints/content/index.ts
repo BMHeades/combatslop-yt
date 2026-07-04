@@ -7,6 +7,7 @@ export const settingsStorage = storage.defineItem<Settings>('sync:settings');
 
 export default defineContentScript({
   matches: ['*://*.youtube.com/*'],
+  registration: 'manifest', // makes the permission not optional
   cssInjectionMode: 'ui',
   main(ctx) {
 
@@ -32,8 +33,8 @@ export default defineContentScript({
       onMount: (container) => {
         const style = document.createElement('style')
         style.textContent =
-          // 'img{ filter: grayscale(100%) blur(8px); }'
-          'img{ filter: grayscale(100%) }'
+          'img{ filter: grayscale(100%) blur(8px); }'
+          // 'img{ filter: grayscale(100%) }'
         container.append(style);
       },
     });

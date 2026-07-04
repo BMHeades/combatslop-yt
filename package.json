@@ -2,7 +2,7 @@
   "name": "CombatSlop YT",
   "description": "Find and elminate slop on Youtube",
   "private": true,
-  "version": "26.6.30.2",
+  "version": "26.7.1-BETA",
   "type": "module",
   "scripts": {
     "dev": "wxt",

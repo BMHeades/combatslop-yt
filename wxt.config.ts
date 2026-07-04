@@ -6,7 +6,7 @@ export default defineConfig({
   manifestVersion: 3,
   manifest: {
     permissions: ['storage'],
-    // host_permissions: [],
+
     action: {},
     browser_specific_settings: {
       gecko: {
