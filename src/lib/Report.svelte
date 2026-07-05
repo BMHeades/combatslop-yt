@@ -36,6 +36,7 @@
         {#if vote === null}
         <div class="w-full pt-1 font-semibold mr-2" out:slide>
             <button
+                aria-label="Report this video as Not Slop"
                 title="Report this video as Not Slop"
                 disabled={vote !== null}
                 class="bg-lime-400 border-lime-600 btn"
@@ -44,6 +45,7 @@
                 }}>Not Slop</button
             >
             <button
+                aria-label="Report this video as Slop"
                 title="Report this video as Slop"
                 disabled={vote !== null}
                 class="bg-orange-300 border-orange-500 btn"
