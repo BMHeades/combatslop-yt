@@ -1,4 +1,4 @@
-import { homePage } from "./homePage";
+import { feedPage } from "./feedPage";
 import { searchPage } from "./searchPage";
 import { watchPage } from "./watchPage";
 import '@/assets/tailwind.css'
@@ -55,15 +55,7 @@ function router(ctx: any, url: URL) {
 
   // Search Page
   if (path.startsWith("/results")) {
-
-    // settingsStorage.getValue().then(settings => {
-    //   if (!settings?.scanOnSearchPage) {
-    //     return
-    //   }
-    // })
     return searchPage(ctx)
-
-
   }
 
   // Video Page
@@ -71,15 +63,14 @@ function router(ctx: any, url: URL) {
     return watchPage(ctx, url)
   }
 
+  // Channel Page
+  if(path.startsWith("/@")){
+    return feedPage(ctx)
+  }
+
   // Home Feed
   if (path === "/") {
-    // settingsStorage.getValue().then(settings => {
-    //   if (!settings?.scanOnHomePage) {
-    //     return
-    //   }
-      
-    // })
-    return homePage(ctx)
+    return feedPage(ctx)
   }
 }
 

@@ -6,7 +6,7 @@ import { settingsStorage } from '.';
 
 const injectedUIs: any[] = []
 
-export const homePage = (ctx: any) => {
+export const feedPage = (ctx: any) => {
   const cardSelector: string = ".ytd-rich-item-renderer > yt-lockup-view-model"
   const linkSelector: string = "a.ytLockupViewModelContentImage"
   const seen = new Set();
@@ -29,7 +29,7 @@ export const homePage = (ctx: any) => {
   settingsStorage.getValue().then(settings => {
     if (settings?.scanOnHomePage) {
       // initial run
-      console.log("Home page injection started")
+      console.log("Feed injection started")
 
       window.addEventListener('yt-navigate-finish', onNavigate, {once: true});
       
@@ -83,7 +83,7 @@ export const homePage = (ctx: any) => {
     // seen.clear()
     // ids.clear()
     // injectedUIs.forEach((ui: any) => ui.remove())
-    console.log("Home page injection cleaned up!")
+    console.log("Feed injection cleaned up!")
   }
 }
 
