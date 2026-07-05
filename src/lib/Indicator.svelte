@@ -5,11 +5,15 @@
 <!-- <div class="inline-block text-[1.25rem] rounded-sm bg-zinc-600/30 px-2 py-0.5 font-semibold text-orange-400"> -->
 <div>
     {#if isSlop === 1}
-    <div class="inline-block p-2 text-base bg-orange-300">
-        <p class="">Slop</p>
+    <div 
+    title="This video is marked as AI slop, if you don't agree with it, please report this as 'Not Slop'"
+    class="inline-block p-2 text-base bg-orange-300">
+        <p  class="">Slop</p>
     </div>
     {:else}
-    <div class="inline-block p-2 text-base bg-lime-300">
+    <div 
+    title="This video is marked as non AI slop (a gem), if you don't agree with it, please report this as 'Slop'"
+    class="inline-block p-2 text-base bg-lime-300">
         <p class="">Gem</p>
     </div>
     {/if}
