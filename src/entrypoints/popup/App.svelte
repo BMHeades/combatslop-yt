@@ -8,6 +8,7 @@
   });
 
   let clientID: null | string = $state("");
+  let loaded = $state(false);
   const settingsStorage = storage.defineItem<Settings>("sync:settings");
 
   onMount(async () => {
@@ -15,16 +16,19 @@
     if (settingsValue) settings = settingsValue;
 
     clientID = await storage.getItem("sync:client_id");
+    loaded = true
   });
 
-  $effect(() => {
+  function saveSettings(){
+    if(!loaded) return
+
     settingsStorage.setValue({
       scanOnHomePage: settings.scanOnHomePage,
       scanOnSearchPage: settings.scanOnSearchPage,
       greyScaleImgs: settings.greyScaleImgs,
     });
     console.log("saved new settings");
-  });
+  }
 
   // easter egg
   let catPressed = $state(false);
@@ -49,6 +53,7 @@
           type="checkbox"
           id="homepage"
           bind:checked={settings.scanOnHomePage}
+          onchange={saveSettings}
         />
         <label for="homepage">Home Feed</label>
       </div>
@@ -57,6 +62,7 @@
           type="checkbox"
           id="searchpage"
           bind:checked={settings.scanOnSearchPage}
+          onchange={saveSettings}
         />
         <label for="searchpage">Search Results</label>
       </div>
@@ -71,6 +77,7 @@
           type="checkbox"
           id="greyscaleimg"
           bind:checked={settings.greyScaleImgs}
+          onchange={saveSettings}
         />
         <label for="greyscaleimg">B&W Images</label>
       </div>
@@ -95,7 +102,7 @@
 </main>
 
 <footer class="p-4">
-  <h2 class="">version {browser.runtime.getManifest().version_name}</h2>
+  <h2 class="">version {browser.runtime.getManifest().version} BETA</h2>
 </footer>
 
 <style>
