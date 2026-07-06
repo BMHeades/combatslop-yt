@@ -32,37 +32,36 @@
 </script>
 
 <div class="w-full h-15 flex justify-end">
-    <div class="flex flex-col w-60">
+    <div class="flex flex-col w-60 mr-2">
         {#if vote === null}
-        <div class="w-full pt-1 font-semibold mr-2" out:slide>
-            <button
-                aria-label="Report this video as Not Slop"
-                title="Report this video as Not Slop"
-                disabled={vote !== null}
-                class="bg-lime-400 border-lime-600 btn"
-                onclick={() => {
-                    upVote();
-                }}>Not Slop</button
+            <div class="w-full pt-1 font-semibold" out:slide>
+                <button
+                    aria-label="Report this video as Not Slop"
+                    title="Report this video as Not Slop"
+                    disabled={vote !== null}
+                    class="bg-lime-400 border-lime-600 btn"
+                    onclick={() => {
+                        upVote();
+                    }}>Not Slop</button
+                >
+                <button
+                    aria-label="Report this video as Slop"
+                    title="Report this video as Slop"
+                    disabled={vote !== null}
+                    class="bg-orange-300 border-orange-500 btn"
+                    onclick={() => {
+                        downVote();
+                    }}>Slop</button
+                >
+            </div>
+        {:else}
+            <div
+                class="bg-gray-700 w-full text-white p-1 px-2"
+                // in:fly={{ opacity: 100, y: 200, duration: 500 }}
+                in:slide
             >
-            <button
-                aria-label="Report this video as Slop"
-                title="Report this video as Slop"
-                disabled={vote !== null}
-                class="bg-orange-300 border-orange-500 btn"
-                onclick={() => {
-                    downVote();
-                }}>Slop</button
-            >
-        </div>
-    {:else}
-        <div
-            class="bg-gray-700 w-full text-white p-1 px-2"
-            // in:fly={{ opacity: 100, y: 200, duration: 500 }}
-            in:slide
-        >
-            <p class="text-base">Thanks for making the internet better!</p>
-        </div>
-    {/if}
+                <p class="text-base">Thanks for making the internet better!</p>
+            </div>
+        {/if}
     </div>
-    
 </div>
