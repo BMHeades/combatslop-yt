@@ -172,8 +172,8 @@ async function flushBatch() {
 
       if (callback) {
         callback({
-          // isSlop: item.isSlop,
-          isSlop: 1, // always return slop
+          isSlop: item.isSlop,
+          // isSlop: 1, // always return slop
         })
 
         videos.delete(item.id)

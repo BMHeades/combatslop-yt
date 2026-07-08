@@ -35,42 +35,8 @@ const processExistingCards = (ctx: any) => {
   }
 }
 
-
-const processLink = (ctx: any, link: Element) => {
-  if (link.hasAttribute("combat-slop-processed")) {
-    console.log("found processed")
-    return
-  }
-  link.setAttribute("combat-slop-processed", "")
-
-  const id = link?.getAttribute('href')?.match(/[?&]v=([^&]+)/)?.[1]
-  const card = link.closest(cardSelector)
-
-  if (!card) return
-  if (id) {
-    browser.runtime.sendMessage({
-      type: "batchCheck",
-      id
-    }).then((data: ScannedSlop) => {
-      if (data.isSlop === 2) return
-      const ui = injectIndicator(ctx, card.querySelector(".ytLockupMetadataViewModelTextContainer")!, id, data.isSlop)
-      uis.push(ui)
-    })
-  }
-  console.log("proccessed")
-}
-
-const processExistingLinks = (ctx: any) => {
-  const existingLinks = document.querySelectorAll("ytd-rich-item-renderer a.ytLockupViewModelContentImage")
-  for (const link of existingLinks) {
-    processLink(ctx, link)
-  }
-}
-
-
 export const feedPage = (ctx: any) => {
   // processExistingCards(ctx)  // direct visit
-  // processExistingLinks(ctx)
 
   const newCardsObserver = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
