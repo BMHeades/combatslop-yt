@@ -1,6 +1,6 @@
 import { mountIndicator } from "@/lib/components";
 
-export const processCard = (ctx: any, card: Element, linkSelector: string) => {
+export const processCard = (ctx: any, card: Element, anchorSelector: string, linkSelector: string, append: "last" | "after" = 'last') => {
   const link = card?.querySelector(linkSelector);
   if (link) {
     if (link.hasAttribute("combat-slop-processed")) {
@@ -15,8 +15,7 @@ export const processCard = (ctx: any, card: Element, linkSelector: string) => {
         id
       }).then((data: ScannedSlop) => {
         if (data.isSlop === 2) return
-        const ui = mountIndicator(ctx, card.querySelector(".ytLockupMetadataViewModelTextContainer")!, id, data.isSlop)
-        // uis.push(ui)
+        const ui = mountIndicator(ctx, card.querySelector(anchorSelector)!, id, data.isSlop, append)
       })
     }
   }
