@@ -7,8 +7,8 @@ import { settingsStorage } from '.';
 const injectedUIs: any[] = []
 
 export const searchPage = (ctx: any) => {
-  const cardSelector: string = "ytd-video-renderer > .ytd-video-renderer#dismissible"
-  const linkSelector: string = "#video-title"
+  const cardSelector = "ytd-video-renderer > .ytd-video-renderer#dismissible"
+  const linkSelector = "#video-title"
   const seen = new Set();
   const ids = new Set();
 
@@ -26,8 +26,6 @@ export const searchPage = (ctx: any) => {
     console.log('page loaded');
     document.querySelectorAll(cardSelector).forEach(processVideo);
   }
-
-
 
   settingsStorage.getValue().then(settings => {
     if (settings?.scanOnSearchPage) {
@@ -114,3 +112,4 @@ async function injectIndicatorUI(ctx: any, anchor: any, id: any, isSlop: 0 | 1) 
   ui.mount();
   injectedUIs.push(ui)
 }
+

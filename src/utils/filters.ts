@@ -1,5 +1,4 @@
 
-
 export const isCardAds = (card: HTMLElement): boolean => {
     if(card.querySelector('ytd-ad-slot-renderer')) return true
     return false

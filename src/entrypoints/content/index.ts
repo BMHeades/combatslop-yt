@@ -22,20 +22,6 @@ export default defineContentScript({
 
     })
 
-    // ctx.addEventListener(document, 'click', (e) => {
-    //     const home = (e.target as Element).closest('a[href="/"]');
-    //     if (!home) return;
-
-    //     console.log("Home clicked");
-    //     ctx.setTimeout(() => {
-    //       processExistingCards(ctx)
-
-    //     }, 1500);
-    //   },
-    //   true
-    // )
-   
-
     // Make all images grey scale
     const greyScaleImg = createIntegratedUi(ctx, {
       position: 'inline',

@@ -1,7 +1,7 @@
 import App from '@/lib/Indicator.svelte'
 import { mount, unmount } from 'svelte';
 
-export const injectIndicator = async(ctx: any, anchor: Element, id: any, isSlop: 0 | 1) => {
+export const mountIndicator = async(ctx: any, anchor: Element, id: any, isSlop: 0 | 1) => {
   const ui = await createShadowRootUi(ctx, {
     name: 'slop-indicator',
     position: 'inline',
