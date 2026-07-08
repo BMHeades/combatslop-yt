@@ -1,5 +1,5 @@
 
-import Report from '@/lib/Report.svelte'
+import Report from '@/lib/ReportButtons.svelte'
 import Indicator from '@/lib/Indicator.svelte'
 import { mount, unmount } from 'svelte';
 

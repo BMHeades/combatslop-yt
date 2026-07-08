@@ -6,6 +6,7 @@
 
     let vote: null | boolean = $state(null);
 
+    // svelte-ignore state_referenced_locally
     storage.getItem(`local:${id}`).then((v) => {
         if (typeof v === "boolean") vote = v;
     });
@@ -32,7 +33,7 @@
 </script>
 
 <div class="w-full h-15 flex justify-end">
-    <div class="flex flex-col w-60 mr-2">
+    <div class="flex flex-col w-60">
         {#if vote === null}
             <div class="w-full pt-1 font-semibold" out:slide>
                 <button

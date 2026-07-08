@@ -8,7 +8,7 @@ export const settingsStorage = storage.defineItem<Settings>('sync:settings');
 export default defineContentScript({
   matches: ['*://*.youtube.com/*'],
   registration: 'manifest', // makes the permission not optional
-  cssInjectionMode: 'ui',
+  cssInjectionMode: 'ui', // needed to make tailwind work 
   main(ctx) {
 
     // injection on initial visit
@@ -22,9 +22,19 @@ export default defineContentScript({
 
     })
 
-    // manual run
-    // let cleanUpHomePage = homePage(ctx)
-    // let cleanUpWatchPage = watchPage(ctx, new URL(location.href))
+    // ctx.addEventListener(document, 'click', (e) => {
+    //     const home = (e.target as Element).closest('a[href="/"]');
+    //     if (!home) return;
+
+    //     console.log("Home clicked");
+    //     ctx.setTimeout(() => {
+    //       processExistingCards(ctx)
+
+    //     }, 1500);
+    //   },
+    //   true
+    // )
+   
 
     // Make all images grey scale
     const greyScaleImg = createIntegratedUi(ctx, {
@@ -33,12 +43,11 @@ export default defineContentScript({
       onMount: (container) => {
         const style = document.createElement('style')
         style.textContent =
-          'img{ filter: grayscale(100%) blur(8px); }'
-          // 'img{ filter: grayscale(100%) }'
+          // 'img{ filter: grayscale(100%) blur(8px); }'
+          'img{ filter: grayscale(100%) }'
         container.append(style);
       },
     });
-
 
     settingsStorage.getValue().then(settings => {
       if (settings?.greyScaleImgs) {
@@ -64,8 +73,12 @@ function router(ctx: any, url: URL) {
   }
 
   // Channel Page
-  if(path.startsWith("/@")){
+  if (path.startsWith("/@")) {
     return feedPage(ctx)
+  }
+  // Shorts Page
+  if (path.startsWith("/shorts")) {
+    return
   }
 
   // Home Feed
