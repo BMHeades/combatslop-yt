@@ -1,4 +1,4 @@
-import { feedPage } from "./feedPage";
+import { homePage } from "./homePage";
 import { searchPage } from "./searchPage";
 import { watchPage } from "./watchPage";
 import '@/assets/tailwind.css'
@@ -8,7 +8,7 @@ export const settingsStorage = storage.defineItem<Settings>('sync:settings');
 export default defineContentScript({
   matches: ['*://*.youtube.com/*'],
   registration: 'manifest', // makes the permission not optional
-  cssInjectionMode: 'ui', // needed to make tailwind work 
+  cssInjectionMode: 'ui', 
   main(ctx) {
 
     // injection on initial visit
@@ -60,7 +60,7 @@ function router(ctx: any, url: URL) {
 
   // Channel Page
   if (path.startsWith("/@")) {
-    return feedPage(ctx)
+    return homePage(ctx)
   }
   // Shorts Page
   if (path.startsWith("/shorts")) {
@@ -69,7 +69,7 @@ function router(ctx: any, url: URL) {
 
   // Home Feed
   if (path === "/") {
-    return feedPage(ctx)
+    return homePage(ctx)
   }
 }
 

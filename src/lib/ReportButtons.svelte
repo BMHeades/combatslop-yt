@@ -19,6 +19,7 @@
             id,
             isSlop: false,
         });
+        console.log(id)
     }
 
     function downVote() {
