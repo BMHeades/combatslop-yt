@@ -172,8 +172,8 @@ async function flushBatch() {
 
       if (callback) {
         callback({
-          // isSlop: item.isSlop,
-          isSlop: 1, // always return slop
+          isSlop: item.isSlop,
+          // isSlop: 1, // always return slop
         })
 
         videos.delete(item.id)
@@ -197,7 +197,7 @@ function batchCheckHandler(data: any, sendResponse: any) {
   if (!batchTimer) {
     batchTimer = setTimeout(() => {
       flushBatch()
-    }, 300)
+    }, 400)
   }
 
   // flush immediately at 20
