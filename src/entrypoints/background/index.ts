@@ -3,7 +3,6 @@ const clientIDStorage = storage.defineItem<string>('sync:client_id')
 
 export default defineBackground(() => {
 
-
   // action button
   // browser.action.onClicked.addListener((tab) => {
   //   console.log("Action button clicked!")
@@ -16,19 +15,6 @@ export default defineBackground(() => {
   //   }).then(() => console.log("voted"));
   // })
 
-  // default options
-  const settingsStorage = storage.defineItem<Settings>('sync:settings');
-  settingsStorage.getValue().then(settings => {
-    if (settings === null) {
-      settingsStorage.setValue({
-        scanOnHomePage: true,
-        scanOnSearchPage: true,
-        greyScaleImgs: false
-      })
-      console.log("default settings set on bg init")
-
-    }
-  })
 
   clientIDStorage.getValue().then(id => {
     if (id === null) {
@@ -37,7 +23,12 @@ export default defineBackground(() => {
     }
   })
 
-  browser.runtime.onMessage.addListener(handleMessages)
+  getConfig().then(config => {
+    if(config.enabled){
+      browser.runtime.onMessage.addListener(handleMessages)
+    }
+  })
+
 });
 
 
@@ -74,11 +65,9 @@ function checkHandler(data: any, sendResponse: any) {
 
 async function voteHandler(data: any, sendResponse: any) {
 
-  // let clientId = await storage.getItem('sync:client_id');
   let clientId = await clientIDStorage.getValue()
   if (!clientId) {
     clientId = uuid()
-    // await storage.setItem('sync:client_id', clientId)
     await clientIDStorage.setValue(clientId)
     console.log("new client id set")
   }
@@ -95,43 +84,6 @@ async function voteHandler(data: any, sendResponse: any) {
   await storage.setItem(`local:${data.id}`, data.isSlop)
   console.log("voted")
 }
-// const batchIds: any[] = []
-// const videos = new Map<any, any>()
-// let flushing = false
-
-// async function batchCheckHandler(data: any, sendResponse: any) {
-//   batchIds.push(data.id)
-//   videos.set(data.id, sendResponse)
-
-//   if (batchIds.length < 20 || flushing) {
-//     return
-//   }
-
-//   flushing = true
-//   const ids = [...batchIds]
-//   batchIds.length = 0
-//   try {
-//     const response = await fetch(import.meta.env.WXT_VIDEOS_URL + "batch", {
-//       method: "POST",
-//       body: JSON.stringify({
-//         ids
-//       }),
-//     })
-//     const resData = await response.json()
-//       console.log(resData)
-
-//     for (const item of resData.checked) {
-//       const callback = videos.get(item.id)
-//       if (callback) {
-//         console.log(item.isSlop)
-//         callback({ isSlop: item.isSlop })
-//         videos.delete(item.id)
-//       }
-//     }
-//   } finally {
-//     flushing = false
-//   }
-// }
 
 const batchIds: string[] = []
 const videos = new Map<string, Function>()

@@ -1,34 +1,7 @@
 <script lang="ts">
   import logo from "@/assets/logo.png";
-
-  let settings: Settings = $state({
-    scanOnHomePage: true,
-    scanOnSearchPage: true,
-    greyScaleImgs: false,
-  });
-
-  let clientID: null | string = $state("");
-  let loaded = $state(false);
-  const settingsStorage = storage.defineItem<Settings>("sync:settings");
-
-  onMount(async () => {
-    const settingsValue = await settingsStorage.getValue();
-    if (settingsValue) settings = settingsValue;
-
-    clientID = await storage.getItem("sync:client_id");
-    loaded = true
-  });
-
-  function saveSettings(){
-    if(!loaded) return
-
-    settingsStorage.setValue({
-      scanOnHomePage: settings.scanOnHomePage,
-      scanOnSearchPage: settings.scanOnSearchPage,
-      greyScaleImgs: settings.greyScaleImgs,
-    });
-    console.log("saved new settings");
-  }
+  import { configure } from "@/utils/config.svelte";
+  import Toggle from "@/lib/Toggle.svelte";
 
   // easter egg
   let catPressed = $state(false);
@@ -36,52 +9,22 @@
 
 <main class="w-80 h-130 accent-amber-600">
   <div class="p-4">
-
     <!-- Title -->
     <div class="">
-      <h1 class="text-xl font pt-8 pb-10 text-center">
-        {browser.runtime.getManifest().name}
-        <b class="text-amber-500">BETA</b>
-      </h1>
+      <a href="https://combatslop.com/">
+        <h1 class="text-2xl font pt-8 pb-10 text-center tracking-tight">
+        COMBAT SLOP
+        <!-- {browser.runtime.getManifest().name} -->
+          <b class="text-amber-500">BETA</b>
+        </h1>
+      </a>
+      
+      <div class="flex flex-col  items-center gap-4">
+        <Toggle bind:checkedToggle={configure.enabled} size='lg' />
+        <p class="text-lg">{configure.enabled? "Enabled" : "Disabled"}</p>
+      </div>
+      
     </div>
-
-    <!-- Settings Scan on -->
-    <fieldset class="pb-4 px-5">
-      <legend>Scan on</legend>
-      <div class="flex gap-1">
-        <input
-          type="checkbox"
-          id="homepage"
-          bind:checked={settings.scanOnHomePage}
-          onchange={saveSettings}
-        />
-        <label for="homepage">Home Feed</label>
-      </div>
-      <div class="flex gap-1">
-        <input
-          type="checkbox"
-          id="searchpage"
-          bind:checked={settings.scanOnSearchPage}
-          onchange={saveSettings}
-        />
-        <label for="searchpage">Search Results</label>
-      </div>
-    </fieldset>
-
-    <br />
-    <!-- Settings misc -->
-    <fieldset class="pb-4 px-5 mt-2">
-      <legend>Misc</legend>
-      <div class="flex gap-1">
-        <input
-          type="checkbox"
-          id="greyscaleimg"
-          bind:checked={settings.greyScaleImgs}
-          onchange={saveSettings}
-        />
-        <label for="greyscaleimg">B&W Images</label>
-      </div>
-    </fieldset>
 
     <!-- Client ID -->
     <div class="p-5">
@@ -92,7 +35,7 @@
     <div class="pt-0 flex justify-center">
       <button onclick={() => (catPressed = !catPressed)} class="h-36">
         <img
-          class="w-36 {catPressed ? 'h-25 w-50 translate-y-6' : 'h-36'}"
+          class="w-36 {catPressed ? 'h-25 w-50 translate-y-6' : 'h-36'} {!configure.enabled && "grayscale"}"
           src={logo}
           alt="Cat poking a slop object logo"
         />
