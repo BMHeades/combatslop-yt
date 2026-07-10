@@ -1,4 +1,4 @@
-import { feedPage } from "./feedPage";
+import { homePage } from "./homePage";
 import { searchPage } from "./searchPage";
 import { watchPage } from "./watchPage";
 import '@/assets/tailwind.css'
@@ -8,7 +8,7 @@ export const settingsStorage = storage.defineItem<Settings>('sync:settings');
 export default defineContentScript({
   matches: ['*://*.youtube.com/*'],
   registration: 'manifest', // makes the permission not optional
-  cssInjectionMode: 'ui',
+  cssInjectionMode: 'ui', 
   main(ctx) {
 
     // injection on initial visit
@@ -22,10 +22,6 @@ export default defineContentScript({
 
     })
 
-    // manual run
-    // let cleanUpHomePage = homePage(ctx)
-    // let cleanUpWatchPage = watchPage(ctx, new URL(location.href))
-
     // Make all images grey scale
     const greyScaleImg = createIntegratedUi(ctx, {
       position: 'inline',
@@ -33,12 +29,11 @@ export default defineContentScript({
       onMount: (container) => {
         const style = document.createElement('style')
         style.textContent =
-          'img{ filter: grayscale(100%) blur(8px); }'
-          // 'img{ filter: grayscale(100%) }'
+          // 'img{ filter: grayscale(100%) blur(8px); }'
+          'img{ filter: grayscale(100%) }'
         container.append(style);
       },
     });
-
 
     settingsStorage.getValue().then(settings => {
       if (settings?.greyScaleImgs) {
@@ -64,13 +59,17 @@ function router(ctx: any, url: URL) {
   }
 
   // Channel Page
-  if(path.startsWith("/@")){
-    return feedPage(ctx)
+  if (path.startsWith("/@")) {
+    return homePage(ctx)
+  }
+  // Shorts Page
+  if (path.startsWith("/shorts")) {
+    return
   }
 
   // Home Feed
   if (path === "/") {
-    return feedPage(ctx)
+    return homePage(ctx)
   }
 }
 

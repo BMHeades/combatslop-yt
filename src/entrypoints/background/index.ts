@@ -197,7 +197,7 @@ function batchCheckHandler(data: any, sendResponse: any) {
   if (!batchTimer) {
     batchTimer = setTimeout(() => {
       flushBatch()
-    }, 300)
+    }, 400)
   }
 
   // flush immediately at 20

@@ -1,16 +1,22 @@
 
-import Report from '@/lib/Report.svelte'
+import Report from '@/lib/ReportButtons.svelte'
 import Indicator from '@/lib/Indicator.svelte'
 import { mount, unmount } from 'svelte';
 
+const cardSelector = "yt-lockup-view-model" // this one immutes on SPA rerenders
+const linkSelector = "a.ytLockupViewModelContentImage"
+const anchorSelector = ".ytLockupMetadataViewModelTextContainer"
 
 const injectedUIs: any = []
 
 export const watchPage = (ctx: any, url: URL) => {
+
+    const feed = feedScanner(ctx, cardSelector, anchorSelector, linkSelector)
+
     const id = url.href.match(/[?&]v=([^&]+)/)?.[1]
     console.log("watch page injection started on", id)
 
-    const anchorReport = '#top-level-buttons-computed:has(segmented-like-dislike-button-view-model)'
+    // const anchorReport = '#top-level-buttons-computed:has(segmented-like-dislike-button-view-model)'
     const anchorIndicator = '#above-the-fold>#title'
 
     function onNavigate() {
@@ -41,6 +47,8 @@ export const watchPage = (ctx: any, url: URL) => {
         window.removeEventListener('yt-navigate-finish', onNavigate);
 
         injectedUIs.forEach((ui: any) => ui.remove())
+
+        feed()
         injectedUIs.length = 0
         console.log("watch page injection cleaned up")
     }
@@ -66,7 +74,6 @@ async function injectReportUI(ctx: any, id: string, anchor: string) {
         }
     });
     injectedUIs.push(ui);
-    // 4. Mount the UI
     ui.autoMount();
     console.log("injected report")
 }
@@ -90,7 +97,6 @@ async function injectIndicatorUI(ctx: any, id: any, anchor: any, isSlop: 0 | 1) 
             if (app) unmount(app)
         }
     });
-    // 4. Mount the UI
     injectedUIs.push(ui);
     ui.autoMount();
     console.log("injected indicator")
