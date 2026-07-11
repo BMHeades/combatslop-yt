@@ -1,3 +1,4 @@
+import { ContentScriptContext } from "#imports"
 import { feedScanner } from "@/utils/scanners"
 
 // const cardSelector = "ytd-rich-item-renderer"
@@ -12,8 +13,8 @@ const anchorSelector = ".ytLockupMetadataViewModelTextContainer"
 //   }
 // }
 
-export const homePage = (ctx: any) => {
-  return feedScanner(ctx, cardSelector, anchorSelector, linkSelector)
+export const homePage = (ctx: ContentScriptContext, config: Config) => {
+  return feedScanner(ctx, config, cardSelector, anchorSelector, linkSelector)
 }
 
 

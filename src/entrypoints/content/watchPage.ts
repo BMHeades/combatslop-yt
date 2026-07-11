@@ -9,9 +9,9 @@ const anchorSelector = ".ytLockupMetadataViewModelTextContainer"
 
 const injectedUIs: any = []
 
-export const watchPage = (ctx: any, url: URL) => {
+export const watchPage = (ctx: any, config: Config, url: URL) => {
 
-    const feed = feedScanner(ctx, cardSelector, anchorSelector, linkSelector)
+    const feed = feedScanner(ctx, config, cardSelector, anchorSelector, linkSelector)
 
     const id = url.href.match(/[?&]v=([^&]+)/)?.[1]
     console.log("watch page injection started on", id)
