@@ -1,6 +1,6 @@
 import { mountIndicator } from "@/lib/components";
 
-const processFeedCard = (ctx: any, card: Element, anchorSelector: string, linkSelector: string, append: "last" | "after" = 'last') => {
+const processFeedCard = (ctx: any, config: Config, card: Element, anchorSelector: string, linkSelector: string, append: "last" | "after" = 'last') => {
   const link = card?.querySelector(linkSelector);
   if (link) {
     if (link.hasAttribute("combat-slop-processed")) {
@@ -22,14 +22,14 @@ const processFeedCard = (ctx: any, card: Element, anchorSelector: string, linkSe
   console.log("proccessed")
 }
 
-export const feedScanner = (ctx: any, cardSelector: string, anchorSelector: string, linkSelector: string) => {
+export const feedScanner = (ctx: any, config: Config, cardSelector: string, anchorSelector: string, linkSelector: string) => {
   console.log("started scanning!")
   const newCardsObserver = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
       mutation.addedNodes.forEach((node) => {
         if (node instanceof Element){
           if (node.matches(cardSelector)) {
-              processFeedCard(ctx, node, anchorSelector, linkSelector)
+              processFeedCard(ctx, config, node, anchorSelector, linkSelector)
           }
         }
       })

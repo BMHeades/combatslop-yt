@@ -12,15 +12,16 @@ export default defineContentScript({
 
     getConfig().then(config => {
       if (config.enabled) {
-        let cleanUp = router(ctx, new URL(location.href))
+        let cleanUp = router(ctx, config, new URL(location.href))
 
         ctx.addEventListener(window, 'wxt:locationchange', ({ newUrl }) => {
           // const path = newUrl.pathname
           if (cleanUp) cleanUp()
-          cleanUp = router(ctx, newUrl)
+          cleanUp = router(ctx, config, newUrl)
         })
       }
     })
+
 
 
     // Make all images grey scale
@@ -40,22 +41,22 @@ export default defineContentScript({
 });
 
 // returns clean up function
-function router(ctx: any, url: URL) {
+function router(ctx: any, config: Config, url: URL) {
   const path = url.pathname
 
   // Search Page
   if (path.startsWith("/results")) {
-    return searchPage(ctx)
+    return searchPage(ctx, config)
   }
 
   // Video Page
   if (path.startsWith("/watch")) {
-    return watchPage(ctx, url)
+    return watchPage(ctx, config, url)
   }
 
   // Channel Page
   if (path.startsWith("/@")) {
-    return homePage(ctx)
+    return homePage(ctx, config)
   }
   // Shorts Page
   if (path.startsWith("/shorts")) {
@@ -64,7 +65,7 @@ function router(ctx: any, url: URL) {
 
   // Home Feed
   if (path === "/") {
-    return homePage(ctx)
+    return homePage(ctx, config)
   }
 }
 
