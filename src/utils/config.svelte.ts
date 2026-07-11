@@ -3,7 +3,6 @@ import { defaultConfig, configStorage } from "./config"
 // configure for popup
 let config: Config = $state(defaultConfig)
 config = await configStorage.getValue()
-configStorage.getValue().then(v => config = v)
 
 export const configure = {
     get enabled(){
@@ -11,7 +10,7 @@ export const configure = {
     },
     set enabled(v){
         config.enabled = v
-        configStorage.setValue(config)
+        configStorage.setValue({...config})
         console.log("config updated")
     },
     
@@ -20,7 +19,7 @@ export const configure = {
     },
     set hideSlop(v){
         config.hideSlop = v
-        configStorage.setValue(config)
+        configStorage.setValue({...config})
         console.log("config updated")
     },
 
@@ -29,7 +28,7 @@ export const configure = {
     },
     set hideShorts(v){
         config.hideShorts = v
-        configStorage.setValue(config)
+        configStorage.setValue({...config})
         console.log("config updated")
     },
 
@@ -38,7 +37,7 @@ export const configure = {
     },
     set hideAdsSlot(v){
         config.hideAdsSlot = v
-        configStorage.setValue(config)
+        configStorage.setValue({...config})
         console.log("config updated")
     }
 }
