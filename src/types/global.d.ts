@@ -5,9 +5,8 @@ declare global {
         isSlop: 0 | 1 | 2
     }
 
-    type Settings = {
-        scanOnHomePage: boolean,
-        scanOnSearchPage: boolean,
-        greyScaleImgs: boolean
+    type Config = {
+        enabled: boolean
     }
+
 }

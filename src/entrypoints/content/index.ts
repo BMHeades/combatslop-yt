@@ -3,24 +3,25 @@ import { searchPage } from "./searchPage";
 import { watchPage } from "./watchPage";
 import '@/assets/tailwind.css'
 
-export const settingsStorage = storage.defineItem<Settings>('sync:settings');
 
 export default defineContentScript({
   matches: ['*://*.youtube.com/*'],
   registration: 'manifest', // makes the permission not optional
-  cssInjectionMode: 'ui', 
+  cssInjectionMode: 'ui',
   main(ctx) {
 
-    // injection on initial visit
-    let cleanUp = router(ctx, new URL(location.href))
+    getConfig().then(config => {
+      if (config.enabled) {
+        let cleanUp = router(ctx, new URL(location.href))
 
-    ctx.addEventListener(window, 'wxt:locationchange', ({ newUrl }) => {
-      // const path = newUrl.pathname
-      if (cleanUp) cleanUp()
-
-      cleanUp = router(ctx, newUrl)
-
+        ctx.addEventListener(window, 'wxt:locationchange', ({ newUrl }) => {
+          // const path = newUrl.pathname
+          if (cleanUp) cleanUp()
+          cleanUp = router(ctx, newUrl)
+        })
+      }
     })
+
 
     // Make all images grey scale
     const greyScaleImg = createIntegratedUi(ctx, {
@@ -34,12 +35,6 @@ export default defineContentScript({
         container.append(style);
       },
     });
-
-    settingsStorage.getValue().then(settings => {
-      if (settings?.greyScaleImgs) {
-        greyScaleImg.mount();
-      }
-    })
 
   },
 });
