@@ -126,8 +126,8 @@ async function flushBatch() {
 
       if (callback) {
         callback({
-          // isSlop: item.isSlop,
-          isSlop: Math.random() > 0.5? 0 : 1// always return slop or gem
+          isSlop: item.isSlop,
+          // isSlop: Math.random() > 0.5? 0 : 1// always return slop or gem
         })
 
         videos.delete(item.id)

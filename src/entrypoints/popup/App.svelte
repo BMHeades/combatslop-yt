@@ -3,16 +3,20 @@
   import { configure } from "@/utils/config.svelte";
   import Toggle from "@/lib/Toggle.svelte";
 
+  // let needsRefresh = $state(false)
+
   // easter egg
   let catPressed = $state(false);
 </script>
 
 <main class="w-80 h-130 accent-amber-600">
   <div class="p-4">
+    
+
     <!-- Title -->
     <div class="">
       <a href="https://combatslop.com/">
-        <h1 class="text-2xl font pt-8 pb-10 text-center tracking-tight">
+        <h1 class="text-2xl font pt-4 pb-10 text-center tracking-tight">
           COMBAT SLOP
           <!-- {browser.runtime.getManifest().name} -->
           <b class="text-amber-500">BETA</b>

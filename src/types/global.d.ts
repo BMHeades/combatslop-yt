@@ -16,3 +16,4 @@ declare global {
     }
 }
 
+displayMode: 'label' | 'hide-slops' | 'gems-only'
