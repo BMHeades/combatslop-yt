@@ -15,11 +15,29 @@ export const configure = {
         console.log("config updated")
     },
     
-    get displayMode(){
-        return config.displayMode
+    get hideSlop(){
+        return config.hideSlop
     },
-    set displayMode(v){
-        config.displayMode = v
+    set hideSlop(v){
+        config.hideSlop = v
+        configStorage.setValue(config)
+        console.log("config updated")
+    },
+
+    get hideShorts(){
+        return config.hideShorts
+    },
+    set hideShorts(v){
+        config.hideShorts = v
+        configStorage.setValue(config)
+        console.log("config updated")
+    },
+
+    get hideAdsSlot(){
+        return config.hideAdsSlot
+    },
+    set hideAdsSlot(v){
+        config.hideAdsSlot = v
         configStorage.setValue(config)
         console.log("config updated")
     }
