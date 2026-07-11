@@ -13,6 +13,15 @@ export const configure = {
         config.enabled = v
         configStorage.setValue(config)
         console.log("config updated")
+    },
+    
+    get displayMode(){
+        return config.displayMode
+    },
+    set displayMode(v){
+        config.displayMode = v
+        configStorage.setValue(config)
+        console.log("config updated")
     }
 }
 

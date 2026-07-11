@@ -23,11 +23,13 @@ export default defineBackground(() => {
     }
   })
 
-  getConfig().then(config => {
-    if(config.enabled){
-      browser.runtime.onMessage.addListener(handleMessages)
-    }
-  })
+  // getConfig().then(config => {
+  //   if(config.enabled){
+      
+  //   }
+  // })
+
+  browser.runtime.onMessage.addListener(handleMessages)
 
 });
 
@@ -125,7 +127,7 @@ async function flushBatch() {
       if (callback) {
         callback({
           // isSlop: item.isSlop,
-          isSlop: 1, // always return slop
+          isSlop: Math.random() > 0.5? 0 : 1// always return slop or gem
         })
 
         videos.delete(item.id)

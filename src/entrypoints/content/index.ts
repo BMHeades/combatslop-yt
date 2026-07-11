@@ -22,8 +22,6 @@ export default defineContentScript({
       }
     })
 
-
-
     // Make all images grey scale
     const greyScaleImg = createIntegratedUi(ctx, {
       position: 'inline',

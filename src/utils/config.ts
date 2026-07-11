@@ -1,5 +1,9 @@
 export const defaultConfig: Config = {
-    enabled: true
+    enabled: true,
+    // displayMode: 'label'
+    hideSlop: false,
+    hideShorts: false,
+    hideAdsSlot: false
 }
 
 export const configStorage = storage.defineItem<Config>(
