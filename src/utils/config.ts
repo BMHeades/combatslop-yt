@@ -4,6 +4,8 @@ export const defaultConfig: Config = {
     hideSlop: false,
     hideShorts: false,
     hideAdsSlot: false,
+    hideMovies: false,
+    showOnlyGems: false,
     debugMode: false
 }
 

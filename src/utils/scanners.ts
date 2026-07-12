@@ -10,21 +10,28 @@ const processFeedCard = (ctx: any, config: Config, card: Element, anchorSelector
     link.setAttribute("combat-slop-processed", "")
     const id = link?.getAttribute('href')?.match(/[?&]v=([^&]+)/)?.[1]
     if (id) {
-      if(config.debugMode){
-        mountIndicator(ctx, card.querySelector(anchorSelector)!, id, Math.random() > 0.5? 0 : 1, append)
-        return
+      
+      const richItemRenderer = card.closest('ytd-rich-item-renderer') as HTMLElement | null
+
+      if(config.showOnlyGems) {
+        richItemRenderer?.style.setProperty('display', 'none');
       }
 
       browser.runtime.sendMessage({
         type: "batchCheck",
         id
       }).then((data: ScannedSlop) => {
-        if (data.isSlop === 0 || data.isSlop === 1){
+        if (data.isSlop !== 2){
           mountIndicator(ctx, card.querySelector(anchorSelector)!, id, data.isSlop, append)
+          
+          if(config.showOnlyGems && data.isSlop === 0){
+            richItemRenderer?.style.setProperty('display', '');
+            return
+          }
 
           // hide slop
           if(config.hideSlop && data.isSlop === 1){
-            (card.closest('ytd-rich-item-renderer') as HTMLElement | null)?.style.setProperty('display', 'none');
+            richItemRenderer?.style.setProperty('display', 'none');
           }
         }
       })
@@ -50,6 +57,11 @@ export const feedScanner = (ctx: any, config: Config, cardSelector: string, anch
           if(config.hideAdsSlot){
             // ad slots
             if(node.matches('ytd-ad-slot-renderer')) (node.closest('ytd-rich-item-renderer') as HTMLElement | null)?.style.setProperty('display', 'none');
+          }
+
+          if(config.hideMovies){
+            // hide movies
+            if(node.matches('ytd-rich-grid-media')) (node.closest('ytd-rich-item-renderer') as HTMLElement | null)?.style.setProperty('display', 'none');
           }
 
           if (node.matches(cardSelector)) {

@@ -40,6 +40,25 @@ export const configure = {
         configStorage.setValue({...config})
         console.log("config updated")
     },
+    
+    get hideMovies(){
+        return config.hideMovies
+    },
+    set hideMovies(v){
+        config.hideMovies = v
+        configStorage.setValue({...config})
+        console.log("config updated")
+    },
+
+
+    get showOnlyGems(){
+        return config.showOnlyGems
+    },
+    set showOnlyGems(v){
+        config.showOnlyGems = v
+        configStorage.setValue({...config})
+        console.log("config updated")
+    },
 
     get debugMode(){
         return config.debugMode

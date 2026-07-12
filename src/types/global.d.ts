@@ -12,9 +12,9 @@ declare global {
         enabled: boolean,
         hideSlop: boolean,
         hideShorts: boolean,
-        hideAdsSlot: boolean
+        hideAdsSlot: boolean,
+        hideMovies: boolean,
+        showOnlyGems: boolean,
         debugMode: boolean
     }
 }
-
-displayMode: 'label' | 'hide-slops' | 'gems-only'
