@@ -8,10 +8,7 @@
   // easter egg
   let catPressed = $state(false);
   if(configure.mode === null && configure.mode === undefined) configure.mode = 0
-  function toggleMode() {
-    // configure.mode = 1
-    configure.mode = (configure.mode + 1) % 3 as 0 | 1 | 2;
-  } 
+
 
 
 </script>
@@ -40,14 +37,14 @@
         Current mode - {modes[configure.mode]}
       </button> -->
 
-      <fieldset class="flex justify-between gap-0 text-sm text-gray-200 rounded-sm">
+      <fieldset class="flex justify-between gap-0 text-sm text-gray-200 rounded-sm" disabled = {!configure.enabled}>
         <legend class="pb-1" >Mode</legend>
-        <button onclick={()=> configure.mode = 0} class="p-1 w-full  {configure.mode === 0 ? ' text-black bg-gray-100' : "hover:bg-stone-800"}">Labels</button>
-        <button onclick={()=> configure.mode = 1} class="p-1 w-full  {configure.mode === 1 ? ' text-black bg-gray-100' : "hover:bg-stone-800"}">Hide slop</button>
-        <button onclick={()=> configure.mode = 2} class="p-1 w-full  {configure.mode === 2 ? ' text-black bg-gray-100' : "hover:bg-stone-800"}">Gems only</button>
+        <button title="Only adds labels such as 'gem' and 'slop', hides no videos" onclick={()=> configure.mode = 0} class="p-1 w-full  {configure.mode === 0 ? ' text-black bg-gray-100' : "hover:bg-stone-800"}">Labels</button>
+        <button title="Hides videos that are marked as 'slop'" onclick={()=> configure.mode = 1} class="p-1 w-full  {configure.mode === 1 ? ' text-black bg-gray-100' : "hover:bg-stone-800"}">Hide slop</button>
+        <button title="Agreesively hides everything except videos marked as 'gem'. This mode is not recommended" onclick={()=> configure.mode = 2} class="p-1 w-full  {configure.mode === 2 ? ' text-black bg-gray-100' : "hover:bg-stone-800"}">Gems only</button>
       </fieldset>
 
-      <fieldset>
+      <fieldset disabled = {!configure.enabled}>
         <legend>Feed Options</legend>
         <div class="flex gap-1 items-center">
           <input
