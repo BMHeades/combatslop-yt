@@ -3,7 +3,8 @@ export const defaultConfig: Config = {
     // displayMode: 'label'
     hideSlop: false,
     hideShorts: false,
-    hideAdsSlot: false
+    hideAdsSlot: false,
+    debugMode: false
 }
 
 export const configStorage = storage.defineItem<Config>(

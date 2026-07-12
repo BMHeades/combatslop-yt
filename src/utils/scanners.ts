@@ -10,20 +10,25 @@ const processFeedCard = (ctx: any, config: Config, card: Element, anchorSelector
     link.setAttribute("combat-slop-processed", "")
     const id = link?.getAttribute('href')?.match(/[?&]v=([^&]+)/)?.[1]
     if (id) {
+      if(config.debugMode){
+        mountIndicator(ctx, card.querySelector(anchorSelector)!, id, Math.random() > 0.5? 0 : 1, append)
+        return
+      }
+
       browser.runtime.sendMessage({
         type: "batchCheck",
         id
       }).then((data: ScannedSlop) => {
         if (data.isSlop === 0 || data.isSlop === 1){
-          const ui = mountIndicator(ctx, card.querySelector(anchorSelector)!, id, data.isSlop, append)
+          mountIndicator(ctx, card.querySelector(anchorSelector)!, id, data.isSlop, append)
 
           // hide slop
           if(config.hideSlop && data.isSlop === 1){
             (card.closest('ytd-rich-item-renderer') as HTMLElement | null)?.style.setProperty('display', 'none');
           }
         }
-
       })
+      
     }
   }
   console.log("proccessed")

@@ -42,7 +42,11 @@
         </div>
         <div class="flex gap-1 items-center">
           <input type="checkbox" id="hideAds" bind:checked={configure.hideAdsSlot}/>
-          <label for="hideAds">Hide Sponsors</label>
+          <label for="hideAds">Hide Youtube Sponsors</label>
+        </div>
+        <div class="flex gap-1 items-center">
+          <input type="checkbox" id="debug" bind:checked={configure.debugMode} />
+          <label for="debug">Debug Mode</label>
         </div>
       </fieldset>
     </div>

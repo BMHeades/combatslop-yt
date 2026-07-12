@@ -39,6 +39,15 @@ export const configure = {
         config.hideAdsSlot = v
         configStorage.setValue({...config})
         console.log("config updated")
+    },
+
+    get debugMode(){
+        return config.debugMode
+    },
+    set debugMode(v){
+        config.debugMode = v
+        configStorage.setValue({...config})
+        console.log("config updated")
     }
 }
 

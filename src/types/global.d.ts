@@ -13,6 +13,7 @@ declare global {
         hideSlop: boolean,
         hideShorts: boolean,
         hideAdsSlot: boolean
+        debugMode: boolean
     }
 }
 
