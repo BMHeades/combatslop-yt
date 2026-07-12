@@ -13,7 +13,7 @@ const processFeedCard = (ctx: any, config: Config, card: Element, anchorSelector
       
       const richItemRenderer = card.closest('ytd-rich-item-renderer') as HTMLElement | null
 
-      if(config.showOnlyGems) {
+      if(config.mode === 2) {
         richItemRenderer?.style.setProperty('display', 'none');
       }
 
@@ -24,13 +24,13 @@ const processFeedCard = (ctx: any, config: Config, card: Element, anchorSelector
         if (data.isSlop !== 2){
           mountIndicator(ctx, card.querySelector(anchorSelector)!, id, data.isSlop, append)
           
-          if(config.showOnlyGems && data.isSlop === 0){
+          if(config.mode === 2 && data.isSlop === 0){
             richItemRenderer?.style.setProperty('display', '');
             return
           }
 
           // hide slop
-          if(config.hideSlop && data.isSlop === 1){
+          if(config.mode === 1 && data.isSlop === 1){
             richItemRenderer?.style.setProperty('display', 'none');
           }
         }

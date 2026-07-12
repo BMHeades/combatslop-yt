@@ -49,14 +49,14 @@ export const configure = {
         configStorage.setValue({...config})
         console.log("config updated")
     },
-    get hideSlop(){
-        return config.hideSlop
-    },
-    set hideSlop(v){
-        config.hideSlop = v
-        configStorage.setValue({...config})
-        console.log("config updated")
-    },
+    // get hideSlop(){
+    //     return config.hideSlop
+    // },
+    // set hideSlop(v){
+    //     config.hideSlop = v
+    //     configStorage.setValue({...config})
+    //     console.log("config updated")
+    // },
     // get showOnlyGems(){
     //     return config.showOnlyGems
     // },

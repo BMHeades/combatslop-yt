@@ -5,8 +5,6 @@ export const defaultConfig: Config = {
     hideMovies: false,
     debugMode: false,
     mode: 0,
-    hideSlop: false,
-    showOnlyGems: false,
 }
 
 export const configStorage = storage.defineItem<Config>(

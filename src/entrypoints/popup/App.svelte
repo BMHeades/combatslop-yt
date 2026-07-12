@@ -3,17 +3,14 @@
   import { configure } from "@/utils/config.svelte";
   import Toggle from "@/lib/Toggle.svelte";
 
-  // let needsRefresh = $state(false)
+  let needsRefresh = $state(false)
 
   // easter egg
   let catPressed = $state(false);
   if(configure.mode === null && configure.mode === undefined) configure.mode = 0
-
-
-
 </script>
 
-<main class="w-80 h-130 accent-amber-600">
+<main class="w-80 h-130 accent-amber-600" onchange={()=> needsRefresh = true}>
   <div class="p-4">
     <!-- Title -->
     <div class="">
@@ -38,10 +35,10 @@
       </button> -->
 
       <fieldset class="flex justify-between gap-0 text-sm text-gray-200 rounded-sm" disabled = {!configure.enabled}>
-        <legend class="pb-1" >Mode</legend>
-        <button title="Only adds labels such as 'gem' and 'slop', hides no videos" onclick={()=> configure.mode = 0} class="p-1 w-full  {configure.mode === 0 ? ' text-black bg-gray-100' : "hover:bg-stone-800"}">Labels</button>
-        <button title="Hides videos that are marked as 'slop'" onclick={()=> configure.mode = 1} class="p-1 w-full  {configure.mode === 1 ? ' text-black bg-gray-100' : "hover:bg-stone-800"}">Hide slop</button>
-        <button title="Agreesively hides everything except videos marked as 'gem'. This mode is not recommended" onclick={()=> configure.mode = 2} class="p-1 w-full  {configure.mode === 2 ? ' text-black bg-gray-100' : "hover:bg-stone-800"}">Gems only</button>
+        <legend class="pb-1" >Display Mode</legend>
+        <button title="Only adds labels such as 'gem' and 'slop', hides no videos" onclick={()=> {configure.mode = 0; needsRefresh=true }} class="p-1 w-full  {configure.mode === 0 ? ' text-black bg-gray-100' : "hover:bg-stone-800"}">Labels</button>
+        <button title="Hides videos that are marked as 'slop'" onclick={()=> {configure.mode = 1; needsRefresh=true}} class="p-1 w-full  {configure.mode === 1 ? ' text-black bg-gray-100' : "hover:bg-stone-800"}">Hide slop</button>
+        <button title="Agreesively hides everything except videos marked as 'gem'. This mode is not recommended" onclick={()=> {configure.mode = 2; needsRefresh=true}} class="p-1 w-full  {configure.mode === 2 ? ' text-black bg-gray-100' : "hover:bg-stone-800"}">Gems only</button>
       </fieldset>
 
       <fieldset disabled = {!configure.enabled}>
@@ -102,8 +99,9 @@
   </div>
 </main>
 
-<footer class="p-4">
+<footer class="p-4 flex justify-between">
   <h2 class="">version {browser.runtime.getManifest().version}</h2>
+  {#if needsRefresh}<span>Refresh required</span>  {/if}
 </footer>
 
 <style>

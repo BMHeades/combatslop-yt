@@ -18,8 +18,6 @@ declare global {
         // 1 => hide slops
         // 2 => show only gems
         mode: 0 | 1 | 2, 
-        showOnlyGems: boolean,
-        hideSlop: boolean,
         debugMode: boolean
     }
 }
