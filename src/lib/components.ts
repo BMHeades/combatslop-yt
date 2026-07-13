@@ -22,7 +22,7 @@ export const mountIndicator = async(ctx: any, anchor: string | Element, id: any,
     }
   });
   autoMount? ui.autoMount(): ui.mount();
-  
+  console.log('mounted label')
   return () => {
     ui.remove()
   }

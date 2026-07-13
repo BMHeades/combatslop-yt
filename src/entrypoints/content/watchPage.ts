@@ -2,27 +2,25 @@
 import Report from '@/lib/ReportButtons.svelte'
 import Indicator from '@/lib/Indicator.svelte'
 import { mount, unmount } from 'svelte';
+import { feedAnchorSelector, feedCardSelector, feedLinkSelector } from '@/utils/selectors';
 
-const cardSelector = "yt-lockup-view-model" // this one immutes on SPA rerenders
-const linkSelector = "a.ytLockupViewModelContentImage"
-const anchorSelector = ".ytLockupMetadataViewModelTextContainer"
 
 const injectedUIs: any = []
 
 export const watchPage = (ctx: any, config: Config, url: URL) => {
 
-    const feed = feedScanner(ctx, config, cardSelector, anchorSelector, linkSelector)
+    const feed = feedScanner(ctx, config, feedCardSelector, feedAnchorSelector, feedLinkSelector)
 
     const id = url.href.match(/[?&]v=([^&]+)/)?.[1]
     console.log("watch page injection started on", id)
 
     // const anchorReport = '#top-level-buttons-computed:has(segmented-like-dislike-button-view-model)'
-    const anchorIndicator = '#above-the-fold>#title'
+    // const anchorIndicator = '#above-the-fold>#title'
 
     function onNavigate() {
         console.log('new page loaded');
         if (id) {
-            injectReportUI(ctx, id, anchorIndicator)
+            injectReportUI(ctx, id, watchPageAnchorIndicator)
 
             // injectIndicatorUI(ctx, id, anchorIndicator, true)
 
@@ -35,7 +33,7 @@ export const watchPage = (ctx: any, config: Config, url: URL) => {
                 // if slop detected
                 if (data.isSlop !== 0 && data.isSlop !== 1) return
 
-                injectIndicatorUI(ctx, id, anchorIndicator, data.isSlop)
+                injectIndicatorUI(ctx, id, watchPageAnchorIndicator, data.isSlop)
 
             })
         }

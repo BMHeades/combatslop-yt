@@ -67,22 +67,15 @@
           />
           <label for="hideMovies">Hide Youtube Movies</label>
         </div>
-        <!-- <div class="flex gap-1 items-center">
-          <input
-            type="checkbox"
-            id="onlyGems"
-            bind:checked={configure.showOnlyGems}
-          />
-          <label for="onlyGems">Show Only Gems</label>
-        </div> -->
-        <!-- <div class="flex gap-1 items-center">
+       
+        <div class="flex gap-1 items-center opacity-0 hover:opacity-100">
           <input
             type="checkbox"
             id="debug"
             bind:checked={configure.debugMode}
           />
           <label for="debug">Debug Mode</label>
-        </div> -->
+        </div>
       </fieldset>
        <div class="pt-0 flex justify-center">
       <button onclick={() => (catPressed = !catPressed)} class="h-36">
