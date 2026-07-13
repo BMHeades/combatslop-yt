@@ -12,6 +12,11 @@ const processFeedCard = (ctx: any, config: Config, card: Element, anchorSelector
     const id = link?.getAttribute('href')?.match(/[?&]v=([^&]+)/)?.[1]
     if (id) {
       
+      if(config.debugMode){
+          mountIndicator(ctx, card.querySelector(anchorSelector)!, id, Math.random() < 0.5? 0 : 1, append)
+          return
+      }
+      
       const richItemRenderer = card.closest(richItemRendererSelector) as HTMLElement | null
 
       if(config.mode === 2) {
