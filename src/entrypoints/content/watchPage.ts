@@ -15,12 +15,12 @@ export const watchPage = (ctx: any, config: Config, url: URL) => {
     console.log("watch page injection started on", id)
 
     // const anchorReport = '#top-level-buttons-computed:has(segmented-like-dislike-button-view-model)'
-    const anchorIndicator = '#above-the-fold>#title'
+    // const anchorIndicator = '#above-the-fold>#title'
 
     function onNavigate() {
         console.log('new page loaded');
         if (id) {
-            injectReportUI(ctx, id, anchorIndicator)
+            injectReportUI(ctx, id, watchPageAnchorIndicator)
 
             // injectIndicatorUI(ctx, id, anchorIndicator, true)
 
@@ -33,7 +33,7 @@ export const watchPage = (ctx: any, config: Config, url: URL) => {
                 // if slop detected
                 if (data.isSlop !== 0 && data.isSlop !== 1) return
 
-                injectIndicatorUI(ctx, id, anchorIndicator, data.isSlop)
+                injectIndicatorUI(ctx, id, watchPageAnchorIndicator, data.isSlop)
 
             })
         }

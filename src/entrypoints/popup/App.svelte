@@ -68,7 +68,7 @@
           <label for="hideMovies">Hide Youtube Movies</label>
         </div>
        
-        <div class="flex gap-1 items-center">
+        <div class="flex gap-1 items-center opacity-0 hover:opacity-100">
           <input
             type="checkbox"
             id="debug"
