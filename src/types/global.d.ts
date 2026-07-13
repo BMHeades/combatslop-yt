@@ -10,10 +10,14 @@ declare global {
 
     interface Config {
         enabled: boolean,
-        hideSlop: boolean,
         hideShorts: boolean,
-        hideAdsSlot: boolean
+        hideAdsSlot: boolean,
+        hideMovies: boolean,
+        
+        // 0 => labels only
+        // 1 => hide slops
+        // 2 => show only gems
+        mode: 0 | 1 | 2, 
+        debugMode: boolean
     }
 }
-
-displayMode: 'label' | 'hide-slops' | 'gems-only'

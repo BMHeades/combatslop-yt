@@ -14,15 +14,6 @@ export const configure = {
         console.log("config updated")
     },
     
-    get hideSlop(){
-        return config.hideSlop
-    },
-    set hideSlop(v){
-        config.hideSlop = v
-        configStorage.setValue({...config})
-        console.log("config updated")
-    },
-
     get hideShorts(){
         return config.hideShorts
     },
@@ -37,6 +28,49 @@ export const configure = {
     },
     set hideAdsSlot(v){
         config.hideAdsSlot = v
+        configStorage.setValue({...config})
+        console.log("config updated")
+    },
+    
+    get hideMovies(){
+        return config.hideMovies
+    },
+    set hideMovies(v){
+        config.hideMovies = v
+        configStorage.setValue({...config})
+        console.log("config updated")
+    },
+
+    get debugMode(){
+        return config.debugMode
+    },
+    set debugMode(v){
+        config.debugMode = v
+        configStorage.setValue({...config})
+        console.log("config updated")
+    },
+    // get hideSlop(){
+    //     return config.hideSlop
+    // },
+    // set hideSlop(v){
+    //     config.hideSlop = v
+    //     configStorage.setValue({...config})
+    //     console.log("config updated")
+    // },
+    // get showOnlyGems(){
+    //     return config.showOnlyGems
+    // },
+    // set showOnlyGems(v){
+    //     config.showOnlyGems = v
+    //     configStorage.setValue({...config})
+    //     console.log("config updated")
+    // },
+
+    get mode(){
+        return config.mode
+    },
+    set mode(v){
+        config.mode = v
         configStorage.setValue({...config})
         console.log("config updated")
     }
