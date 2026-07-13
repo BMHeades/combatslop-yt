@@ -1,4 +1,5 @@
 import { mountIndicator } from "@/lib/components";
+import { adsCardSelector, movieCardSelector, richItemRendererSelector, shortsSectionSelector } from "./selectors";
 
 const processFeedCard = (ctx: any, config: Config, card: Element, anchorSelector: string, linkSelector: string, append: "last" | "after" = 'last') => {
   const link = card?.querySelector(linkSelector);
@@ -11,7 +12,7 @@ const processFeedCard = (ctx: any, config: Config, card: Element, anchorSelector
     const id = link?.getAttribute('href')?.match(/[?&]v=([^&]+)/)?.[1]
     if (id) {
       
-      const richItemRenderer = card.closest('ytd-rich-item-renderer') as HTMLElement | null
+      const richItemRenderer = card.closest(richItemRendererSelector) as HTMLElement | null
 
       if(config.mode === 2) {
         richItemRenderer?.style.setProperty('display', 'none');
@@ -42,29 +43,40 @@ const processFeedCard = (ctx: any, config: Config, card: Element, anchorSelector
 }
 
 export const feedScanner = (ctx: any, config: Config, cardSelector: string, anchorSelector: string, linkSelector: string) => {
+
+  // process existing cards
+  const existingCards = document.querySelectorAll(cardSelector)
+  for (const card of existingCards) {
+    console.log(card)
+    processFeedCard(ctx, config, card, anchorSelector, linkSelector)
+  }
+
   console.log("started scanning!")
   const newCardsObserver = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
       mutation.addedNodes.forEach((node) => {
         if (node instanceof Element){
-
           
+          // if(node.matches('ytm-rich-item-renderer')) console.log(node)
+          // if(node.matches('yt-lockup-view-model')) console.log(node)
+
           if(config.hideShorts){
             // shorts section
-            if(node.matches('ytd-rich-section-renderer')) (node as HTMLElement | null)?.style.setProperty('display', 'none');
+            if(node.matches(shortsSectionSelector)) (node as HTMLElement | null)?.style.setProperty('display', 'none');
           }
 
           if(config.hideAdsSlot){
             // ad slots
-            if(node.matches('ytd-ad-slot-renderer')) (node.closest('ytd-rich-item-renderer') as HTMLElement | null)?.style.setProperty('display', 'none');
+            if(node.matches(adsCardSelector)) (node.closest(richItemRendererSelector) as HTMLElement | null)?.style.setProperty('display', 'none');
           }
 
           if(config.hideMovies){
             // hide movies
-            if(node.matches('ytd-rich-grid-media')) (node.closest('ytd-rich-item-renderer') as HTMLElement | null)?.style.setProperty('display', 'none');
+            if(node.matches(movieCardSelector)) (node.closest(richItemRendererSelector) as HTMLElement | null)?.style.setProperty('display', 'none');
           }
 
           if (node.matches(cardSelector)) {
+            
               processFeedCard(ctx, config, node, anchorSelector, linkSelector)
           }
         }

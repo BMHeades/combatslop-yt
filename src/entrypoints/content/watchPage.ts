@@ -2,16 +2,14 @@
 import Report from '@/lib/ReportButtons.svelte'
 import Indicator from '@/lib/Indicator.svelte'
 import { mount, unmount } from 'svelte';
+import { feedAnchorSelector, feedCardSelector, feedLinkSelector } from '@/utils/selectors';
 
-const cardSelector = "yt-lockup-view-model" // this one immutes on SPA rerenders
-const linkSelector = "a.ytLockupViewModelContentImage"
-const anchorSelector = ".ytLockupMetadataViewModelTextContainer"
 
 const injectedUIs: any = []
 
 export const watchPage = (ctx: any, config: Config, url: URL) => {
 
-    const feed = feedScanner(ctx, config, cardSelector, anchorSelector, linkSelector)
+    const feed = feedScanner(ctx, config, feedCardSelector, feedAnchorSelector, feedLinkSelector)
 
     const id = url.href.match(/[?&]v=([^&]+)/)?.[1]
     console.log("watch page injection started on", id)
