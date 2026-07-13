@@ -7,7 +7,7 @@
 
   // easter egg
   let catPressed = $state(false);
-  if(configure.mode === null && configure.mode === undefined) configure.mode = 0
+  if(configure.mode === null || configure.mode === undefined) configure.mode = 0
 </script>
 
 <main class="w-80 h-130 accent-amber-600" onchange={()=> needsRefresh = true}>
@@ -99,9 +99,9 @@
   </div>
 </main>
 
-<footer class="p-4 flex justify-between">
+<footer class="p-4 flex justify-between items-center">
   <h2 class="">version {browser.runtime.getManifest().version}</h2>
-  {#if needsRefresh}<span>Refresh required</span>  {/if}
+  {#if needsRefresh}<span class="text-sm">Refresh requried</span>  {/if}
 </footer>
 
 <style>
