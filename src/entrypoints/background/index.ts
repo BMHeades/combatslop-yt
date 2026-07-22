@@ -70,7 +70,6 @@ function checkHandler(data: any, sendResponse: any) {
 }
 
 async function voteHandler(data: any, sendResponse: any) {
-
   let clientId = await clientIDStorage.getValue()
   if (!clientId) {
     clientId = uuid()
@@ -89,6 +88,20 @@ async function voteHandler(data: any, sendResponse: any) {
 
   await storage.setItem(`local:${data.id}`, data.isSlop)
   console.log("voted")
+}
+
+async function undoVoteHandler(data: any, sendResponse: any) {
+  let clientId = await clientIDStorage.getValue()
+  await fetch(import.meta.env.WXT_VIDEOS_URL + data.id, {
+    method: "DELETE",
+    body: JSON.stringify({
+      voterId: clientId
+    }),
+  })
+
+  await storage.removeItem(`local:${data.id}`, { removeMeta: true })
+
+  console.log("undo(ed) vote")
 }
 
 const batchIds: string[] = []

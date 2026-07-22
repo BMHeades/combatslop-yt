@@ -66,12 +66,15 @@
             </div>
         {:else}
             <div
-                class="bg-gray-700 w-full text-white p-1 px-2"
+                class=" w-full text-white p-1 px-2"
                 // in:fly={{ opacity: 100, y: 200, duration: 500 }}
                 in:slide
             >
-                <p class="text-base">Thanks for making the internet better!</p>
-                <button onclick={undoVote}>undo</button>
+                <!-- <p class="text-base">Thanks for making the internet better!</p> -->
+                <button 
+                    class="bg-gray-500 border-gray-600 btn"
+
+                onclick={undoVote}>Undo Vote</button>
             </div>
         {/if}
     </div>
