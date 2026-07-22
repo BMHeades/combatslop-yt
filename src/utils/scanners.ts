@@ -5,7 +5,7 @@ const processFeedCard = (ctx: any, config: Config, card: Element, anchorSelector
   const link = card?.querySelector(linkSelector);
   if (link) {
     if (link.hasAttribute("combat-slop-processed")) {
-      console.log("found processed")
+      // console.log("found processed")
       return
     }
     link.setAttribute("combat-slop-processed", "")
@@ -44,7 +44,7 @@ const processFeedCard = (ctx: any, config: Config, card: Element, anchorSelector
       
     }
   }
-  console.log("proccessed")
+  // console.log("proccessed")
 }
 
 export const feedScanner = (ctx: any, config: Config, cardSelector: string, anchorSelector: string, linkSelector: string) => {
@@ -52,7 +52,7 @@ export const feedScanner = (ctx: any, config: Config, cardSelector: string, anch
   // process existing cards
   const existingCards = document.querySelectorAll(cardSelector)
   for (const card of existingCards) {
-    console.log(card)
+    // console.log(card)
     processFeedCard(ctx, config, card, anchorSelector, linkSelector)
   }
 

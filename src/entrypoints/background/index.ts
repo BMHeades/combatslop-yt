@@ -53,6 +53,11 @@ function handleMessages(data: any, sender: any, sendResponse: any) {
     voteHandler(data, sendResponse)
     return true
   }
+
+  if (data.type == "undoVote") {
+    undoVoteHandler(data, sendResponse)
+    return true
+  }
 }
 
 
@@ -66,7 +71,6 @@ function checkHandler(data: any, sendResponse: any) {
 }
 
 async function voteHandler(data: any, sendResponse: any) {
-
   let clientId = await clientIDStorage.getValue()
   if (!clientId) {
     clientId = uuid()
@@ -85,6 +89,24 @@ async function voteHandler(data: any, sendResponse: any) {
 
   await storage.setItem(`local:${data.id}`, data.isSlop)
   console.log("voted")
+}
+
+async function undoVoteHandler(data: any, sendResponse: any) {
+  let clientId = await clientIDStorage.getValue()
+  await fetch(import.meta.env.WXT_VIDEOS_URL + data.id + '/delete', {
+    method: "POST",
+    body: JSON.stringify({
+      voterId: clientId
+    }),
+  })
+
+  await storage.removeItem(`local:${data.id}`)
+  // console.log()
+  // storage.getItem(`local:${data.id}`).then((v) => {
+  //       console.log(v)
+  // });
+
+  console.log("undo(ed) vote")
 }
 
 const batchIds: string[] = []
@@ -158,4 +180,3 @@ function batchCheckHandler(data: any, sendResponse: any) {
     flushBatch()
   }
 }
-
