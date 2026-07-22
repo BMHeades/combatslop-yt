@@ -93,8 +93,8 @@ async function voteHandler(data: any, sendResponse: any) {
 
 async function undoVoteHandler(data: any, sendResponse: any) {
   let clientId = await clientIDStorage.getValue()
-  await fetch(import.meta.env.WXT_VIDEOS_URL + data.id, {
-    method: "DELETE",
+  await fetch(import.meta.env.WXT_VIDEOS_URL + data.id + '/delete', {
+    method: "POST",
     body: JSON.stringify({
       voterId: clientId
     }),
