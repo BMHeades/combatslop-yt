@@ -31,6 +31,14 @@
             isSlop: true,
         });
     }
+
+    function undoVote() {
+        vote = false;
+        console.log("undo request sent");
+        browser.runtime.sendMessage({
+            type: "undoVote"
+        });
+    }
 </script>
 
 <div class="w-full h-15 flex justify-end">
@@ -63,6 +71,7 @@
                 in:slide
             >
                 <p class="text-base">Thanks for making the internet better!</p>
+                <button onclick={undoVote}>undo</button>
             </div>
         {/if}
     </div>

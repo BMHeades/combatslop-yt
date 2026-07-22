@@ -52,7 +52,7 @@ export const feedScanner = (ctx: any, config: Config, cardSelector: string, anch
   // process existing cards
   const existingCards = document.querySelectorAll(cardSelector)
   for (const card of existingCards) {
-    console.log(card)
+    // console.log(card)
     processFeedCard(ctx, config, card, anchorSelector, linkSelector)
   }
 

@@ -53,6 +53,10 @@ function handleMessages(data: any, sender: any, sendResponse: any) {
     voteHandler(data, sendResponse)
     return true
   }
+
+  if (data.type == "undoVote") {
+    console.log("undo request received")
+  }
 }
 
 
