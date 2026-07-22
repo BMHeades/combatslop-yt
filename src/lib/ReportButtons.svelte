@@ -6,8 +6,9 @@
 
     let vote: null | boolean = $state(null);
 
-    // svelte-ignore state_referenced_locally
+    
     storage.getItem(`local:${id}`).then((v) => {
+        console.log(v)
         if (typeof v === "boolean") vote = v;
     });
 
@@ -36,15 +37,17 @@
         vote = false;
         console.log("undo request sent");
         browser.runtime.sendMessage({
-            type: "undoVote"
+            type: "undoVote",
+            id
         });
+        vote = null
     }
 </script>
 
 <div class="w-full h-15 flex justify-end">
     <div class="flex flex-col w-60">
         {#if vote === null}
-            <div class="w-full pt-1 font-semibold" out:slide>
+            <div class="w-full pt-1 font-semibold" transition:slide>
                 <button
                     aria-label="Report this video as Not Slop"
                     title="Report this video as Not Slop"
@@ -68,7 +71,7 @@
             <div
                 class=" w-full text-white p-1 px-2"
                 // in:fly={{ opacity: 100, y: 200, duration: 500 }}
-                in:slide
+                transition:slide
             >
                 <!-- <p class="text-base">Thanks for making the internet better!</p> -->
                 <button 

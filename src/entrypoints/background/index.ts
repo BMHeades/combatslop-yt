@@ -55,7 +55,8 @@ function handleMessages(data: any, sender: any, sendResponse: any) {
   }
 
   if (data.type == "undoVote") {
-    console.log("undo request received")
+    undoVoteHandler(data, sendResponse)
+    return true
   }
 }
 
@@ -99,7 +100,11 @@ async function undoVoteHandler(data: any, sendResponse: any) {
     }),
   })
 
-  await storage.removeItem(`local:${data.id}`, { removeMeta: true })
+  await storage.removeItem(`local:${data.id}`)
+  // console.log()
+  // storage.getItem(`local:${data.id}`).then((v) => {
+  //       console.log(v)
+  // });
 
   console.log("undo(ed) vote")
 }
@@ -175,4 +180,3 @@ function batchCheckHandler(data: any, sendResponse: any) {
     flushBatch()
   }
 }
-
